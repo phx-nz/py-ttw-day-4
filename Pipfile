@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+boilerplate = { file = "." }
+
+[dev-packages]
+boilerplate = { file = ".", editable = true }
+autohooks = "*"
+autohooks-plugin-black = "*"
+autohooks-plugin-pylint = "*"
+autohooks-plugin-pytest = "*"
+autohooks-plugin-ruff = "*"
+black = "*"
+build = "*"
+ipython = "*"
+pylint = "*"
+pytest = "*"
+ruff = "*"
+sphinx = "*"
+sphinx_rtd_theme = "*"
+tox = "*"
+twine = "*"
+
+[requires]
+python_version = "3.12"
