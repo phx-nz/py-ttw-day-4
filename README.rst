@@ -25,11 +25,7 @@ Running the server
 ------------------
 To start the server, run the following command::
 
-   pipenv run uvicorn api.main:app --reload
-
-This executes `uvicorn`_ and points it at the ``app`` (``FastAPI``) server object in
-`src/api/main.py <./src/api/main.py>`_.  The ``--reload`` flag tells it to restart the
-server when you make code changes in your application.
+   pipenv run dev
 
 You can confirm the server is running by going to
 `http://127.0.0.1:8000/v1 <http://127.0.0.1:8000/v1>`_ in your browser.

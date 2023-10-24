@@ -25,3 +25,6 @@ twine = "*"
 
 [requires]
 python_version = "3.12"
+
+[scripts]
+dev = "uvicorn api.main:app --reload"
