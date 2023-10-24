@@ -4,10 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-boilerplate = { file = "." }
 
 [dev-packages]
-boilerplate = { file = ".", editable = true }
+py-ttw-day-2 = { file = ".", editable = true }
 autohooks = "*"
 autohooks-plugin-black = "*"
 autohooks-plugin-pylint = "*"

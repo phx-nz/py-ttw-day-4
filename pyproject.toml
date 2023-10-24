@@ -1,9 +1,9 @@
 # :see: https://packaging.python.org/en/latest/specifications/declaring-project-metadata
 
 [project]
-name = "boilerplate"
+name = "py-ttw-day-2"
 version = "1.0.0"
-description = "Template for Python repos"
+description = "Starting point for Python Tech Transformation Workshop day 2"
 readme = "README.rst"
 requires-python = ">= 3.12"
 license = { text = "© 2023 PHX Limited - All Rights Reserved" }
@@ -13,12 +13,6 @@ authors = [
 
 dependencies = [
 ]
-
-[project.urls]
-Documentation = "https://github.com/phx-nz/boilerplate"
-Changelog = "https://github.com/phx-nz/boilerplate/releases"
-Issues = "https://github.com/phx-nz/boilerplate/issues"
-Repository = "https://github.com/phx-nz/boilerplate"
 
 [tool.autohooks]
 mode = "pipenv"
