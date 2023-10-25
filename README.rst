@@ -59,6 +59,19 @@ Run tests with the ``tox`` command::
 
       pipenv run pytest
 
+Generating user profiles
+------------------------
+The project comes pre-loaded with set of randomised profiles, generated using the
+`Random User Generator API`_.  If desired you can generate new profiles by running the
+following command::
+
+   pipenv run data/generate_profiles.py
+
+By default, this will generate 5 new profiles.  If desired you can specify a different
+number as a command-line argument.  For example, to generate 25 new profiles::
+
+   pipenv run data/generate_profiles.py 25
+
 Documentation
 -------------
 This project uses `Sphinx`_ to build documentation files.  Source files are
@@ -77,6 +90,7 @@ To build the documentation locally:
 Documentation will be built in ``docs/_build/html``.
 
 
+.. _Random User Generator API: https://randomuser.me/documentation
 .. _Sphinx: https://www.sphinx-doc.org
 .. _tox: https://tox.readthedocs.io
 .. _uvicorn: https://www.uvicorn.org/

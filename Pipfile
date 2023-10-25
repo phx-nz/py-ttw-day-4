@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+fastapi = "*"
+pydantic = "*"
 
 [dev-packages]
 py-ttw-day-2 = { file = ".", editable = true }
@@ -23,6 +25,7 @@ sphinx = "*"
 sphinx_rtd_theme = "*"
 tox = "*"
 twine = "*"
+typer = {extras = ["all"], version = "*"}
 
 [requires]
 python_version = "3.12"

@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "username": "sadleopard654",
+    "password": "ready",
+    "gender": "male",
+    "full_name": "Lincoln Thomas",
+    "street_address": "8351 Ferry Road",
+    "email": "lincoln.thomas@example.com",
+    "created_at": "2015-11-23T05:22:47.325000+00:00"
+  },
+  {
+    "id": 2,
+    "username": "goldencat846",
+    "password": "jabber",
+    "gender": "male",
+    "full_name": "Ryder Wood",
+    "street_address": "1666 Dyers Road",
+    "email": "ryder.wood@example.com",
+    "created_at": "2021-06-24T15:17:22.456000+00:00"
+  },
+  {
+    "id": 3,
+    "username": "tinyfrog982",
+    "password": "lucy",
+    "gender": "male",
+    "full_name": "Archer Lee",
+    "street_address": "1548 Waipuna Road",
+    "email": "archer.lee@example.com",
+    "created_at": "2002-05-03T15:05:09.670000+00:00"
+  },
+  {
+    "id": 4,
+    "username": "angrypanda812",
+    "password": "nutter",
+    "gender": "male",
+    "full_name": "Matthew Lewis",
+    "street_address": "4015 Nelson Street",
+    "email": "matthew.lewis@example.com",
+    "created_at": "2007-05-01T20:25:39.061000+00:00"
+  },
+  {
+    "id": 5,
+    "username": "beautifullion609",
+    "password": "orioles",
+    "gender": "female",
+    "full_name": "Sofia Harris",
+    "street_address": "339 Pakuranga Road",
+    "email": "sofia.harris@example.com",
+    "created_at": "2013-02-04T23:22:14.449000+00:00"
+  }
+]
