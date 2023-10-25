@@ -15,16 +15,12 @@ autohooks-plugin-pylint = "*"
 autohooks-plugin-pytest = "*"
 autohooks-plugin-ruff = "*"
 black = "*"
-build = "*"
 httpx = "*"
 ipython = "*"
 pylint = "*"
 pytest = "*"
 ruff = "*"
-sphinx = "*"
-sphinx_rtd_theme = "*"
 tox = "*"
-twine = "*"
 typer = {extras = ["all"], version = "*"}
 
 [requires]

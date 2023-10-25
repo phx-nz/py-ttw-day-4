@@ -74,23 +74,13 @@ number as a command-line argument.  For example, to generate 25 new profiles::
 
 Documentation
 -------------
-This project uses `Sphinx`_ to build documentation files.  Source files are
-located in the ``docs`` directory.
+FastAPI automatically generates OpenAPI documentation for you.  Once you've started the
+server, go to `http://127.0.0.1:8000/docs <http://127.0.0.1:8000/docs>` to see it.
 
-To build the documentation locally:
-
-#. Switch to the ``docs`` directory::
-
-      cd docs
-
-#. Build the documentation::
-
-      make html
-
-Documentation will be built in ``docs/_build/html``.
+Refer to `FastAPI documentation`_ for more information.
 
 
+.. _FastAPI documentation: https://fastapi.tiangolo.com/tutorial/first-steps/#interactive-api-docs
 .. _Random User Generator API: https://randomuser.me/documentation
-.. _Sphinx: https://www.sphinx-doc.org
 .. _tox: https://tox.readthedocs.io
 .. _uvicorn: https://www.uvicorn.org/

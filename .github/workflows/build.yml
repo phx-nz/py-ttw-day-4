@@ -40,8 +40,3 @@ jobs:
         run: pipenv run ruff check **/*.py
       - name: Run tests
         run: pipenv run pytest
-      - name: Check docs
-        run: |
-          cd docs
-          mkdir -p _static
-          pipenv run make html
