@@ -30,4 +30,6 @@ typer = { extras = ["all"], version = "*" }
 python_version = "3.12"
 
 [scripts]
-dev = "uvicorn api.main:app --reload"
+app-cli = "python -m cli.main"
+dev-server = "uvicorn api.main:app --reload"
+server = "uvicorn api.main:app"

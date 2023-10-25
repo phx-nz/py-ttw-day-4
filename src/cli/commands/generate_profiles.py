@@ -1,13 +1,8 @@
 """
-Generates profile data using the `Random User Generator API <https://randomuser.me/>`_.
-
-Results are stored in ``profiles.json`` in the same directory as this file.
-
-Note that downloaded profiles will replace existing ones.
+Defines CLI command for generating profiles.
 """
-import asyncio
+
 import typing
-from functools import wraps
 from pathlib import Path
 
 import orjson
@@ -15,34 +10,29 @@ import typer
 from httpx import AsyncClient
 from rich import print as rich_print
 
+from cli.async_support import embed_event_loop
 from models.profile import Profile
+
+__all__ = ["app"]
+
+app = typer.Typer()
 
 API_URL_TEMPLATE = "https://randomuser.me/api/?nat=NZ&results={count}"
 DEFAULT_COUNT = 5
-TARGET_PATH = Path(__file__).parent / "profiles.json"
+TARGET_PATH = Path(__file__).parent.parent.parent / "data" / "profiles.json"
 
 
-def embed_event_loop(func):
-    """
-    Workaround for running async functions via Typer.
-
-    :see: https://github.com/tiangolo/typer/issues/88#issuecomment-889486850
-    """
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        async def coroutine():
-            return await func(*args, **kwargs)
-
-        return asyncio.run(coroutine())
-
-    return wrapper
-
-
+# Decorate as ``@app.callback`` instead of ``@app.command`` so that Typer runs it
+# automatically when the user invokes the ``generate_profiles`` command.
+@app.callback(invoke_without_command=True)
 @embed_event_loop
 async def main(count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT):
     """
-    Entry point for generating profile data.
+    Generates profile data using Random User Generator API (https://randomuser.me/).
+
+    Results are stored in ``data/profiles.json``.
+
+    Note that downloaded profiles will replace existing ones.
     """
     rich_print(f"[green]Loading [cyan]{count}[/cyan] profiles...[/green]")
 
@@ -74,12 +64,8 @@ async def main(count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT):
     for profile in profiles:
         rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
 
-    rich_print("[green]Saving profiles...[/green]")
+    rich_print(f"[green]Saving profiles to {TARGET_PATH}...[/green]")
     with open(TARGET_PATH, "wb") as f:
         f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
 
     rich_print("[green]Done![/green]")
-
-
-if __name__ == "__main__":
-    typer.run(main)

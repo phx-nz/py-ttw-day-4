@@ -25,10 +25,22 @@ Running the server
 ------------------
 To start the server, run the following command::
 
-   pipenv run dev
+   pipenv run dev-server
 
 You can confirm the server is running by going to
 `http://127.0.0.1:8000/v1 <http://127.0.0.1:8000/v1>`_ in your browser.
+
+.. tip::
+
+   You can find the command that pipenv runs under the hood in ``Pipfile`` under the
+   ``[scripts]`` heading.
+
+Running CLI commands
+--------------------
+This app also comes with a set of CLI commands that you can run.  Use the following
+command to see what commands are available::
+
+   pipenv run app-cli --help
 
 Checking code quality
 ---------------------
@@ -65,12 +77,12 @@ The project comes pre-loaded with set of randomised profiles, generated using th
 `Random User Generator API`_.  If desired you can generate new profiles by running the
 following command::
 
-   pipenv run python data/generate_profiles.py
+   pipenv run app-cli generate_profiles
 
 By default, this will generate 5 new profiles.  If desired you can specify a different
 number as a command-line argument.  For example, to generate 25 new profiles::
 
-   pipenv run python data/generate_profiles.py 25
+   pipenv run app-cli generate_profiles 25
 
 Documentation
 -------------
