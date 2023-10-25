@@ -65,12 +65,12 @@ The project comes pre-loaded with set of randomised profiles, generated using th
 `Random User Generator API`_.  If desired you can generate new profiles by running the
 following command::
 
-   pipenv run data/generate_profiles.py
+   pipenv run python data/generate_profiles.py
 
 By default, this will generate 5 new profiles.  If desired you can specify a different
 number as a command-line argument.  For example, to generate 25 new profiles::
 
-   pipenv run data/generate_profiles.py 25
+   pipenv run python data/generate_profiles.py 25
 
 Documentation
 -------------

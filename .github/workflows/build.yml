@@ -23,6 +23,10 @@ jobs:
           # https://github.com/actions/setup-python#caching-packages-dependencies
           cache: pipenv
           python-version: ${{ matrix.python-version }}
+      - name: Install build dependencies
+        # https://stackoverflow.com/a/5178444/5568265
+        run: |
+          apt-get install libxml2-dev libxslt-dev python-dev
       - name: Install dependencies
         run: |
           python -m pip install pipenv
