@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 fastapi = "*"
 pydantic = "*"
+uvicorn = { extras = ["standard"], version = "*" }
 
 [dev-packages]
 py-ttw-day-2 = { file = ".", editable = true }
@@ -17,11 +18,13 @@ autohooks-plugin-ruff = "*"
 black = "*"
 httpx = "*"
 ipython = "*"
+orjson = "*"
+pipenv = "*"
 pylint = "*"
 pytest = "*"
 ruff = "*"
 tox = "*"
-typer = {extras = ["all"], version = "*"}
+typer = { extras = ["all"], version = "*" }
 
 [requires]
 python_version = "3.12"

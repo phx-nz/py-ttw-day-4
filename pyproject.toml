@@ -22,3 +22,6 @@ pre-commit = [
     "autohooks.plugins.ruff",
     "autohooks.plugins.pytest"
 ]
+
+[tool.pylint.typecheck]
+generated-members = ["orjson"]

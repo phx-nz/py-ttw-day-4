@@ -6,12 +6,11 @@ Results are stored in ``profiles.json`` in the same directory as this file.
 Note that downloaded profiles will replace existing ones.
 """
 import asyncio
-import json
 import typing
-from datetime import datetime
 from functools import wraps
 from pathlib import Path
 
+import orjson
 import typer
 from httpx import AsyncClient
 from rich import print as rich_print
@@ -38,17 +37,6 @@ def embed_event_loop(func):
         return asyncio.run(coroutine())
 
     return wrapper
-
-
-class DatetimeAwareEncoder(json.JSONEncoder):
-    """
-    JSON encoder with support for datetime objects.
-    """
-
-    def default(self, o):
-        if isinstance(o, datetime):
-            return o.isoformat()
-        return json.JSONEncoder.default(self, o)
 
 
 @embed_event_loop
@@ -87,8 +75,8 @@ async def main(count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT):
         rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
 
     rich_print("[green]Saving profiles...[/green]")
-    with open(TARGET_PATH, "w", encoding="utf8") as f:
-        json.dump(list(map(dict, profiles)), f, cls=DatetimeAwareEncoder, indent=2)
+    with open(TARGET_PATH, "wb") as f:
+        f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
 
     rich_print("[green]Done![/green]")
 
