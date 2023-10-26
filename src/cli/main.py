@@ -9,12 +9,12 @@ __all__ = ["app"]
 
 import typer
 
-from .commands import generate_profiles
+from cli.commands import generate
 
 app = typer.Typer()
 
 # Activate commands.
-app.add_typer(generate_profiles.app, name="generate_profiles")
+app.add_typer(generate.app, name="generate")
 
 if __name__ == "__main__":
     app()

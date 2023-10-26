@@ -21,11 +21,11 @@ DEFAULT_COUNT = 5
 TARGET_PATH = Path(__file__).parent.parent.parent / "data" / "profiles.json"
 
 
-# Decorate as ``@app.callback`` instead of ``@app.command`` so that Typer runs it
-# automatically when the user invokes the ``generate_profiles`` command.
-@app.callback(invoke_without_command=True)
+@app.command("profiles")
 @embed_event_loop
-async def main(count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT):
+async def generate_profiles(
+    count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT
+):
     """
     Generates profile data using Random User Generator API (https://randomuser.me/).
 
