@@ -10,7 +10,14 @@ from models.profile import Profile
 
 __all__ = ["load_profiles", "save_profiles"]
 
-DATA_FILE = Path(__file__).parent.parent / "data" / "profiles.json"
+
+def _get_data_file() -> Path:
+    """
+    Returns the path to the file where profiles are stored.
+
+    Written as its own function so that we can mock it during unit tests.
+    """
+    return Path(__file__).parent.parent / "data" / "profiles.json"
 
 
 def load_profiles() -> list[Profile]:
@@ -20,7 +27,7 @@ def load_profiles() -> list[Profile]:
     Note that this function is synchronous, which is not ideal for I/O operations.  It's
     OK for now because we'll replace all of this with a proper database tomorrow (:
     """
-    with open(DATA_FILE, "rb") as f:
+    with open(_get_data_file(), "rb") as f:
         return [Profile(**record) for record in orjson.loads(f.read())]
 
 
@@ -31,5 +38,5 @@ def save_profiles(profiles: list[Profile]) -> None:
     Note that this function is synchronous, which is not ideal for I/O operations.  It's
     OK for now because we'll replace all of this with a proper database tomorrow (:
     """
-    with open(DATA_FILE, "wb") as f:
+    with open(_get_data_file(), "wb") as f:
         f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
