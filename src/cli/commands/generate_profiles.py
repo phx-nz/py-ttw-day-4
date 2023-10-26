@@ -1,19 +1,18 @@
 """
 Defines CLI command for generating profiles.
 """
+__all__ = ["app"]
 
 import typing
 from pathlib import Path
 
-import orjson
 import typer
 from httpx import AsyncClient
 from rich import print as rich_print
 
 from cli.async_support import embed_event_loop
 from models.profile import Profile
-
-__all__ = ["app"]
+from services.profile import save_profiles
 
 app = typer.Typer()
 
@@ -65,7 +64,6 @@ async def main(count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT):
         rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
 
     rich_print(f"[green]Saving profiles to {TARGET_PATH}...[/green]")
-    with open(TARGET_PATH, "wb") as f:
-        f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
+    save_profiles(profiles)
 
     rich_print("[green]Done![/green]")

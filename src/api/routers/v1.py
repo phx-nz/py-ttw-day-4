@@ -1,10 +1,9 @@
 """
 Define routes for our v1 API.
 """
+__all__ = ["router"]
 
 from fastapi import APIRouter
-
-__all__ = ["router"]
 
 # All API routes will have a path prefix of ``/v1``.
 # E.g., ``@router.get("/foo/bar")`` adds a route at ``/v1/foo/bar``.

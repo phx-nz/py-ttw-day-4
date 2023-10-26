@@ -1,11 +1,10 @@
 """
 Defines helper functions for running async commands via Typer.
 """
+__all__ = ["embed_event_loop"]
 
 import asyncio
 from functools import wraps
-
-__all__ = ["embed_event_loop"]
 
 
 def embed_event_loop(func):

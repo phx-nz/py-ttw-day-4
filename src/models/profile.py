@@ -1,6 +1,8 @@
 """
 User profile model definition.
 """
+__all__ = ["Profile"]
+
 from datetime import datetime
 
 from pydantic import BaseModel

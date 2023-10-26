@@ -5,7 +5,6 @@ Refer to README.rst for instructions to run commands via the CLI.
 
 :see: https://typer.tiangolo.com/tutorial/subcommands/add-typer/#put-them-together
 """
-
 __all__ = ["app"]
 
 import typer
