@@ -12,7 +12,7 @@ router = APIRouter(prefix="/v1", tags=["v1"])
 
 
 @router.get("/")
-def index():
+def index() -> dict:
     """
     Simple static route, so that we can confirm the server is running.
     """
