@@ -43,8 +43,6 @@ jobs:
             test/**/*.py
       - name: Run black
         run: pipenv run black --check ${{ steps.find-files.outputs.paths }}
-      - name: Run pylint
-        run: pipenv run pylint ${{ steps.find-files.outputs.paths }}
       - name: Run ruff
         run: pipenv run ruff check ${{ steps.find-files.outputs.paths }}
       - name: Run tests

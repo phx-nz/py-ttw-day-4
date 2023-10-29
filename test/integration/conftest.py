@@ -1,4 +1,3 @@
-# pylint: disable=line-too-long
 """
 Common fixtures used by integration tests.
 
