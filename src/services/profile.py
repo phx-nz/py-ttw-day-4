@@ -1,14 +1,13 @@
 """
 Use cases for working with profiles.
 """
+__all__ = ["load_profiles", "save_profiles"]
 
 from pathlib import Path
 
 import orjson
 
 from models.profile import Profile
-
-__all__ = ["load_profiles", "save_profiles"]
 
 
 def _get_data_file() -> Path:
