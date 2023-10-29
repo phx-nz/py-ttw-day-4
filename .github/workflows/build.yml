@@ -32,13 +32,20 @@ jobs:
         run: |
           python -m pip install pipenv
           pipenv install --dev
-      - name: List files
-        run: find . -name '*.py'
+        # GitHub Actions globbing doesn't work the way you'd expect, so we need to use
+        # a separate action to do the globbing for us.
+      - name: Find files to check
+        id: find-files
+        uses: tj-actions/glob@v17
+        with:
+          files: |
+            src/**/*.py
+            test/**/*.py
       - name: Run black
-        run: pipenv run black --check src/**/*.py test/**/*.py
+        run: pipenv run black --check "${{ steps.find-files.outputs.files }}"
       - name: Run pylint
-        run: pipenv run pylint src/**/*.py test/**/*.py
+        run: pipenv run pylint "${{ steps.find-files.outputs.files }}"
       - name: Run ruff
-        run: pipenv run ruff check src/**/*.py test/**/*.py
+        run: pipenv run ruff check "${{ steps.find-files.outputs.files }}"
       - name: Run tests
         run: pipenv run pytest
