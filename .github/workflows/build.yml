@@ -41,11 +41,13 @@ jobs:
           files: |
             src/**/*.py
             test/**/*.py
+      - name: List files
+        run: echo "${{ steps.find-files.outputs.paths }}"
       - name: Run black
-        run: pipenv run black --check "${{ steps.find-files.outputs.files }}"
+        run: pipenv run black --check "${{ steps.find-files.outputs.paths }}"
       - name: Run pylint
-        run: pipenv run pylint "${{ steps.find-files.outputs.files }}"
+        run: pipenv run pylint "${{ steps.find-files.outputs.paths }}"
       - name: Run ruff
-        run: pipenv run ruff check "${{ steps.find-files.outputs.files }}"
+        run: pipenv run ruff check "${{ steps.find-files.outputs.paths }}"
       - name: Run tests
         run: pipenv run pytest
