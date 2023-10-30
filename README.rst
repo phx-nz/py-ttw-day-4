@@ -71,7 +71,7 @@ We'll talk more about building a CLI app during tomorrow's workshop 😎
 Documentation
 -------------
 FastAPI automatically generates OpenAPI documentation for you.  Once you've started the
-server, go to `http://localhost:8000/docs <http://localhost:8000/docs>` to see it.
+server, go to `http://localhost:8000/docs <http://localhost:8000/docs>`_ to see it.
 
 Refer to `FastAPI documentation`_ for more information.
 
