@@ -16,6 +16,7 @@ def _get_data_file() -> Path:
 
     Written as its own function so that we can mock it during unit tests.
     """
+    # src/data/profiles.json
     return Path(__file__).parent.parent / "data" / "profiles.json"
 
 

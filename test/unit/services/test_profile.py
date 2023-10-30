@@ -1,7 +1,6 @@
 """
 Unit tests for the profile service.
 """
-from datetime import datetime
 
 from models.profile import Profile
 from services.profile import load_profiles, save_profiles
@@ -36,7 +35,6 @@ def test_save_profiles():
             full_name="Arlo Edwards",
             street_address="4717 Flaxmere Ave",
             email="arlo.edwards@example.com",
-            created_at=datetime(2013, 6, 30, 5, 36, 41, 256000),
         ),
         Profile(
             id=2,
@@ -46,7 +44,6 @@ def test_save_profiles():
             full_name="Lily Wright",
             street_address="6203 Hillsborough Road",
             email="lily.wright@example.com",
-            created_at=datetime(2019, 10, 30, 13, 38, 54, 248000),
         ),
     ]
 

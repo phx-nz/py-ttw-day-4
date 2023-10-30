@@ -55,7 +55,6 @@ async def generate_profiles(
             street_address=f'{profile["location"]["street"]["number"]} '
             f'{profile["location"]["street"]["name"]}',
             email=profile["email"],
-            created_at=profile["registered"]["date"],
         )
         for profile_id, profile in enumerate(raw_profiles, 1)
     ]

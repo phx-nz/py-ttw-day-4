@@ -1,14 +1,12 @@
 """
 Global fixtures accessible to all tests for this project.
 """
-from datetime import datetime
 from tempfile import NamedTemporaryFile
 
 import pytest
 
 from models.profile import Profile
 from services import profile
-from services.profile import save_profiles
 
 
 @pytest.fixture(autouse=True)
@@ -30,7 +28,6 @@ def profiles(monkeypatch) -> list[Profile]:
             full_name="Ethan Chen",
             street_address="5723 Crawford Street",
             email="ethan.chen@example.com",
-            created_at=datetime(2008, 7, 18, 14, 33, 22, 929000),
         ),
         Profile(
             id=2,
@@ -40,7 +37,6 @@ def profiles(monkeypatch) -> list[Profile]:
             full_name="Lewis Martin",
             street_address="1772 Maunganui Road",
             email="lewis.martin@example.com",
-            created_at=datetime(2019, 1, 29, 11, 2, 51, 810000),
         ),
         Profile(
             id=3,
@@ -50,7 +46,6 @@ def profiles(monkeypatch) -> list[Profile]:
             full_name="Natalie Wood",
             street_address="9920 Marshland Road",
             email="natalie.wood@example.com",
-            created_at=datetime(2022, 3, 1, 20, 24, 42, 891000),
         ),
     ]
 
@@ -62,7 +57,7 @@ def profiles(monkeypatch) -> list[Profile]:
         monkeypatch.setattr(profile, "_get_data_file", lambda: f.name)
 
         # Populate our temporary "database" with the above profiles.
-        save_profiles(fixture_profiles)
+        profile.save_profiles(fixture_profiles)
 
         # Let the test run with the "database" now populated.
         # Once the test finishes, pytest will automatically undo all the changes made

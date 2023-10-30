@@ -6,8 +6,7 @@
     "gender": "male",
     "full_name": "Ethan Chen",
     "street_address": "5723 Crawford Street",
-    "email": "ethan.chen@example.com",
-    "created_at": "2008-07-18T14:33:22.929000+00:00"
+    "email": "ethan.chen@example.com"
   },
   {
     "id": 2,
@@ -16,8 +15,7 @@
     "gender": "male",
     "full_name": "Lewis Martin",
     "street_address": "1772 Maunganui Road",
-    "email": "lewis.martin@example.com",
-    "created_at": "2019-01-29T11:02:51.810000+00:00"
+    "email": "lewis.martin@example.com"
   },
   {
     "id": 3,
@@ -26,8 +24,7 @@
     "gender": "female",
     "full_name": "Natalie Wood",
     "street_address": "9920 Marshland Road",
-    "email": "natalie.wood@example.com",
-    "created_at": "2022-03-01T20:24:42.891000+00:00"
+    "email": "natalie.wood@example.com"
   },
   {
     "id": 4,
@@ -36,8 +33,7 @@
     "gender": "male",
     "full_name": "Arlo Edwards",
     "street_address": "4717 Flaxmere Ave",
-    "email": "arlo.edwards@example.com",
-    "created_at": "2013-06-30T05:36:41.256000+00:00"
+    "email": "arlo.edwards@example.com"
   },
   {
     "id": 5,
@@ -46,7 +42,6 @@
     "gender": "female",
     "full_name": "Lily Wright",
     "street_address": "6203 Hillsborough Road",
-    "email": "lily.wright@example.com",
-    "created_at": "2019-10-30T13:38:54.248000+00:00"
+    "email": "lily.wright@example.com"
   }
 ]

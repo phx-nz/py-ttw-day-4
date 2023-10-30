@@ -15,9 +15,7 @@ def embed_event_loop(func):
 
     .. important::
 
-       Put this decorator **after** ``@app.command``.  Example:
-
-       .. code-block:: python
+       Put this decorator **after** ``@app.command``.  Example::
 
           # Correct
           @app.command()

@@ -5,7 +5,7 @@ __all__ = ["router"]
 
 from fastapi import APIRouter
 
-# All API routes will have a path prefix of ``/v1``.
+# All API routes defined in this module will have a path prefix of ``/v1``.
 # E.g., ``@router.get("/foo/bar")`` adds a route at ``/v1/foo/bar``.
 # :see: https://fastapi.tiangolo.com/tutorial/bigger-applications/#apirouter
 router = APIRouter(prefix="/v1", tags=["v1"])

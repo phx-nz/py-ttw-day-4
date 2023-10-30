@@ -21,7 +21,6 @@ orjson = "*"
 pipenv = "*"
 pytest = "*"
 ruff = "*"
-tox = "*"
 typer = { extras = ["all"], version = "*" }
 
 [requires]

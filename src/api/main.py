@@ -8,6 +8,7 @@ Refer to README.rst for instructions to run the server.
 __all__ = ["app"]
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from .routers import v1
 
@@ -16,3 +17,11 @@ app = FastAPI()
 
 # Activate routers to serve the API endpoints.
 app.include_router(v1.router)
+
+
+@app.get("/")
+def homepage() -> RedirectResponse:
+    """
+    Redirects ``/`` to ``/v1``.
+    """
+    return RedirectResponse("/v1")

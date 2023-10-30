@@ -3,8 +3,6 @@ User profile model definition.
 """
 __all__ = ["Profile"]
 
-from datetime import datetime
-
 from pydantic import BaseModel
 
 
@@ -20,4 +18,3 @@ class Profile(BaseModel):
     full_name: str
     street_address: str
     email: str
-    created_at: datetime
