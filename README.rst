@@ -44,8 +44,7 @@ You can manually run code quality checks with the following commands::
    # Check formatting:
    pipenv run black [file ...]
 
-   # Linting (run both for best coverage):
-   pipenv run pylint [file ...]
+   # Run linter
    pipenv run ruff check --fix [file ...]
 
 Running Unit Tests
