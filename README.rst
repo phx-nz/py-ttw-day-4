@@ -240,8 +240,8 @@ That's our happy path sorted.  Next we need to handle an error case, where the u
 requests a profile ID that doesn't exist.
 
 #. Try going to
-   `http://localhost:8000/v1/profile/999 <http://localhost:8000/v1/profile/999>` in your
-   browser or API development tool and note the server error that you get.
+   `http://localhost:8000/v1/profile/999 <http://localhost:8000/v1/profile/999>`_ in
+   your browser or API development tool and note the server error that you get.
 
 #. This time, let's try a TDD approach.  Write an integration test that sends a request
    to get an invalid profile ID and checks that the response status code is 404.
