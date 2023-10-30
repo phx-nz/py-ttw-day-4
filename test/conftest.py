@@ -13,7 +13,7 @@ from services import profile
 def profiles(monkeypatch) -> list[Profile]:
     """
     Injects a known set of profiles into our "database", so that
-    :py:func:services.profile.load_profiles returns a deterministic result.
+    :py:func:`services.profile.load_profiles` returns a deterministic result.
 
     Note that this fixture is automatically applied to all tests in this project
     (the ``autouse=True`` part in the decorator), so that you don't have to worry about
