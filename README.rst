@@ -254,7 +254,7 @@ requests a profile ID that doesn't exist.
    your test pass.
 
    In order to send back a 404 response, your API endpoint will need to raise an
-   `HTTPException <http://localhost:8000/v1/profile/999>`_.
+   `HTTPException <https://fastapi.tiangolo.com/tutorial/handling-errors/#use-httpexception>`_.
 
 Step 3: Edit profile by ID (happy path)
 ---------------------------------------
