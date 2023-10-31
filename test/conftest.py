@@ -6,7 +6,7 @@ from tempfile import NamedTemporaryFile
 import pytest
 
 from models.profile import Profile
-from services import profile
+from services.profile import ProfileService
 
 
 @pytest.fixture(autouse=True)
@@ -54,10 +54,10 @@ def profiles(monkeypatch) -> list[Profile]:
     with NamedTemporaryFile() as f:
         # Override the ``_get_data_file()`` function to instead return the path to our
         # temporary "database".
-        monkeypatch.setattr(profile, "_get_data_file", lambda: f.name)
+        monkeypatch.setattr(ProfileService, "_get_data_file", lambda: f.name)
 
         # Populate our temporary "database" with the above profiles.
-        profile.save_profiles(fixture_profiles)
+        ProfileService.save_profiles(fixture_profiles)
 
         # Let the test run with the "database" now populated.
         # Once the test finishes, pytest will automatically undo all the changes made

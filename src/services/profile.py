@@ -1,7 +1,4 @@
-"""
-Use cases for working with profiles.
-"""
-__all__ = ["load_profiles", "save_profiles"]
+__all__ = ["ProfileService"]
 
 from pathlib import Path
 
@@ -10,33 +7,39 @@ import orjson
 from models.profile import Profile
 
 
-def _get_data_file() -> Path:
+class ProfileService:
     """
-    Returns the path to the file where profiles are stored.
-
-    Written as its own function so that we can mock it during unit tests.
+    Use cases for working with profiles.
     """
-    # src/data/profiles.json
-    return Path(__file__).parent.parent / "data" / "profiles.json"
 
+    @staticmethod
+    def load_profiles() -> list[Profile]:
+        """
+        Loads profiles from the data file.
 
-def load_profiles() -> list[Profile]:
-    """
-    Loads profiles from the data file.
+        Note that this function is synchronous, which is not ideal for I/O operations.
+        It's OK for now because we'll replace it with a proper database tomorrow (:
+        """
+        with open(ProfileService._get_data_file(), "rb") as f:
+            return [Profile(**record) for record in orjson.loads(f.read())]
 
-    Note that this function is synchronous, which is not ideal for I/O operations.  It's
-    OK for now because we'll replace all of this with a proper database tomorrow (:
-    """
-    with open(_get_data_file(), "rb") as f:
-        return [Profile(**record) for record in orjson.loads(f.read())]
+    @staticmethod
+    def save_profiles(profiles: list[Profile]) -> None:
+        """
+        Saves profiles to the data file, replacing anything that's currently there.
 
+        Note that this function is synchronous, which is not ideal for I/O operations.
+        It's OK for now because we'll replace it with a proper database tomorrow (:
+        """
+        with open(ProfileService._get_data_file(), "wb") as f:
+            f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
 
-def save_profiles(profiles: list[Profile]) -> None:
-    """
-    Saves profiles to the data file, replacing anything that's currently there.
+    @staticmethod
+    def _get_data_file() -> Path:
+        """
+        Returns the path to the file where profiles are stored.
 
-    Note that this function is synchronous, which is not ideal for I/O operations.  It's
-    OK for now because we'll replace all of this with a proper database tomorrow (:
-    """
-    with open(_get_data_file(), "wb") as f:
-        f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
+        Written as its own function so that we can mock it during unit tests.
+        """
+        # src/data/profiles.json
+        return Path(__file__).parent.parent / "data" / "profiles.json"

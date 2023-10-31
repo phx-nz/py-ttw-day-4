@@ -3,7 +3,7 @@ Unit tests for the profile service.
 """
 
 from models.profile import Profile
-from services.profile import load_profiles, save_profiles
+from services.profile import ProfileService
 
 
 def test_load_profiles(profiles: list[Profile]):
@@ -14,7 +14,7 @@ def test_load_profiles(profiles: list[Profile]):
     Note that the ``profiles`` fixture monkey-patches the service to load/save profiles
     in a temporary file.
     """
-    loaded_profiles = load_profiles()
+    loaded_profiles = ProfileService.load_profiles()
     assert loaded_profiles == profiles
 
 
@@ -47,7 +47,7 @@ def test_save_profiles():
         ),
     ]
 
-    save_profiles(new_profiles)
+    ProfileService.save_profiles(new_profiles)
 
-    loaded_profiles = load_profiles()
+    loaded_profiles = ProfileService.load_profiles()
     assert loaded_profiles == new_profiles
