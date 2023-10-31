@@ -85,7 +85,7 @@ The project uses a JSON file as its "database", located at
 `src/data/profiles.json <./src/data/profiles.json>`_.  Tomorrow we'll turn this into a
 proper database 😇
 
-There are also two functions in `src/services/profile.py <./src/services/profile.py>`_
+There are also two methods in `src/services/profile.py <./src/services/profile.py>`_
 that you can use to read and write profile data, respectively.
 
 .. tip::
@@ -137,15 +137,15 @@ profile ID 3.
 #. Now let's switch back to the API endpoint and get it to load some actual profile
    data.
 
-   In `src/services/profile.py <./src/services/profile.py>`_ you can find a function
-   called ``load_profiles()`` which returns a list of all of the profiles in the
-   database.  Your API endpoint will need to call this function and then find the
+   In `src/services/profile.py <./src/services/profile.py>`_ you can find a method
+   called ``ProfileService.load_profiles()`` which returns a list of all of the profiles
+   in the database.  Your API endpoint will need to call this function and then find the
    profile with the matching ID in the list.
 
    Once your endpoint has found the correct profile, it should ``return`` the profile
    data, and unfortunately this is a bit tricky.  By default FastAPI sends responses in
-   JSON format, and the ``Profile`` objects returned by ``load_profiles()`` aren't
-   compatible with JSON.
+   JSON format, and the ``Profile`` objects returned by
+   ``ProfileService.load_profiles()`` aren't compatible with JSON.
 
    Fortunately, FastAPI has a solution for this:
    `jsonable_encoder() <https://fastapi.tiangolo.com/tutorial/encoder/>`_ converts the
@@ -158,7 +158,7 @@ profile ID 3.
       .. code-block:: py
 
          from fastapi.encoders import jsonable_encoder
-         from services.profile import load_profiles
+         from services.profile import ProfileService.load_profiles
 
          @router.get("/profile/{profile_id}")
          def get_profile(profile_id: int) -> dict:
@@ -166,8 +166,10 @@ profile ID 3.
              Retrieves the profile with the specified ID.
              """
              # This is just one way to do it.
-             # You might have used a different approach.
-             profile = next(p for p in load_profiles() if p.id == profile_id)
+             # You might have used a different approach (:
+             profile = next(
+                 p for p in ProfileService.load_profiles() if p.id == profile_id
+             )
 
              return jsonable_encoder(profile)
 
@@ -268,9 +270,9 @@ Here are some hints to help you:
 - Look at FastAPI's `Request Body <https://fastapi.tiangolo.com/tutorial/body/>`_
   documentation to see how to access and validate the request body in your API endpoint.
 - In `src/services/profile.py <./src/services/profile.py>`_ there is a
-  ``save_profiles()`` function that overwrites the profiles stored in the database.
-  Once your API endpoint has modified the profile, use this function to save the
-  updated list of profiles.
+  ``ProfileService.save_profiles()`` method that overwrites the profiles stored in the
+  database.  Once your API endpoint has modified the profile, use this function to save
+  the updated list of profiles.
 
 
 Step 4: Edit profile by ID (nonexistent ID)
