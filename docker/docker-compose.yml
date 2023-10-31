@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: ..
+      # Important: this path must be relative to the `context` dir, not the directory
+      # that `docker-compose.yml` is in.
+      dockerfile: ./docker/app-development.dockerfile
+    hostname: py-ttw-day-2-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ..:/app

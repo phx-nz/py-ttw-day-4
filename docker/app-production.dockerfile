@@ -17,7 +17,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install dependencies into the virtualenv.
 # Note that we pass the `--deploy` flag to abort if Pipfile.lock is out-of-date.
-COPY Pipfile Pipfile.lock ./
+COPY ../Pipfile Pipfile.lock ./
 RUN pip install pipenv && pipenv install --deploy
 
 ##
@@ -34,7 +34,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Copy application code and Pipfile.
 # Pipfile.lock isn't strictly needed, but we'll include it just so that we have a
 # convenient record of what dependencies were installed.
-COPY src Pipfile Pipfile.lock /app/
+COPY ../src Pipfile Pipfile.lock /app/
 
 # Expose port 8000, so that uvicorn can receive external requests.
 #
