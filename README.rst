@@ -43,8 +43,13 @@ You can also run the app inside a Docker container.  Use the following command::
 
    pipenv run docker-start
 
-When the Docker container runs, it will mount your local codebase as a volume, so that
-as you make changes to your code, the server will automatically reload 😎
+.. tip::
+
+   When the Docker container runs, it will mount your local codebase as a volume, so
+   that as you make changes to your code, the server will automatically reload 😎
+
+   Note that if you make any changes that would require a rebuild (e.g., add
+   dependencies to ``Pipfile``), then you'll need to stop and restart the container.
 
 To stop the Docker container, run the following command::
 
