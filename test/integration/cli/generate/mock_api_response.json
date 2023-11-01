@@ -1,0 +1,290 @@
+{
+  "results": [
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Arthur",
+        "last": "Wang"
+      },
+      "location": {
+        "street": {
+          "number": 1522,
+          "name": "Saint Aubyn Street"
+        },
+        "city": "Whanganui",
+        "state": "Otago",
+        "country": "New Zealand",
+        "postcode": 77927,
+        "coordinates": {
+          "latitude": "-81.6646",
+          "longitude": "-67.5738"
+        },
+        "timezone": {
+          "offset": "+7:00",
+          "description": "Bangkok, Hanoi, Jakarta"
+        }
+      },
+      "email": "arthur.wang@example.com",
+      "login": {
+        "uuid": "1dd2cf9c-e0b4-4bd9-8192-c7591aab0aef",
+        "username": "purpledog816",
+        "password": "bassman",
+        "salt": "5aSpR1Jc",
+        "md5": "18fd7a959b868b42ad9e385a58dd6c4a",
+        "sha1": "0d80e48b945560dc41c7f24d3543dbf451f280a6",
+        "sha256": "53223da25aa00eb4b05c64772978f8655abdf44ad9111746fed561a41bf52b3c"
+      },
+      "dob": {
+        "date": "1970-05-30T00:41:11.570Z",
+        "age": 53
+      },
+      "registered": {
+        "date": "2008-08-31T08:35:10.395Z",
+        "age": 15
+      },
+      "phone": "(066)-706-8982",
+      "cell": "(192)-127-7594",
+      "id": {
+        "name": "",
+        "value": null
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/61.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/61.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/61.jpg"
+      },
+      "nat": "NZ"
+    },
+    {
+      "gender": "female",
+      "name": {
+        "title": "Ms",
+        "first": "Florence",
+        "last": "Walker"
+      },
+      "location": {
+        "street": {
+          "number": 4455,
+          "name": "Oxford Terrace"
+        },
+        "city": "Whanganui",
+        "state": "Taranaki",
+        "country": "New Zealand",
+        "postcode": 13158,
+        "coordinates": {
+          "latitude": "69.5058",
+          "longitude": "-75.9598"
+        },
+        "timezone": {
+          "offset": "+11:00",
+          "description": "Magadan, Solomon Islands, New Caledonia"
+        }
+      },
+      "email": "florence.walker@example.com",
+      "login": {
+        "uuid": "2f324cb9-f789-44cb-b7af-b06f9d82efa4",
+        "username": "crazygorilla341",
+        "password": "pakistan",
+        "salt": "A7J1Gh57",
+        "md5": "5af1bd4dfe0d5aaaaf35f5fade7e49e1",
+        "sha1": "c4ebeb69c9e2da29ae60dcdf4801319b3c52a2ae",
+        "sha256": "f5fc9dab08ef41e44b48f3497b7482616d14147dd6f79ad6d1aebb1313876a59"
+      },
+      "dob": {
+        "date": "1948-09-17T23:54:15.169Z",
+        "age": 75
+      },
+      "registered": {
+        "date": "2002-11-26T06:50:54.333Z",
+        "age": 20
+      },
+      "phone": "(406)-232-0691",
+      "cell": "(380)-438-9309",
+      "id": {
+        "name": "",
+        "value": null
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/80.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/80.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/80.jpg"
+      },
+      "nat": "NZ"
+    },
+    {
+      "gender": "female",
+      "name": {
+        "title": "Miss",
+        "first": "Molly",
+        "last": "Jones"
+      },
+      "location": {
+        "street": {
+          "number": 2563,
+          "name": "Barbadoes Street"
+        },
+        "city": "Nelson",
+        "state": "Wellington",
+        "country": "New Zealand",
+        "postcode": 81477,
+        "coordinates": {
+          "latitude": "-18.9257",
+          "longitude": "-83.5693"
+        },
+        "timezone": {
+          "offset": "+3:00",
+          "description": "Baghdad, Riyadh, Moscow, St. Petersburg"
+        }
+      },
+      "email": "molly.jones@example.com",
+      "login": {
+        "uuid": "10d70a44-309e-415d-976c-f60f2db51840",
+        "username": "heavywolf343",
+        "password": "freefall",
+        "salt": "YuxH8IIK",
+        "md5": "cde0ce1b8782f0cd1650ac2bd3ffc01b",
+        "sha1": "aeb26ccff6b0e6c62831f614eb8a41673a53d1ae",
+        "sha256": "4d8b7169415374f76dfe5e76714755e12660f7632f9db40a7335906e659c4e27"
+      },
+      "dob": {
+        "date": "1957-10-02T22:50:51.575Z",
+        "age": 66
+      },
+      "registered": {
+        "date": "2002-04-02T11:30:50.399Z",
+        "age": 21
+      },
+      "phone": "(072)-932-9660",
+      "cell": "(217)-343-0733",
+      "id": {
+        "name": "",
+        "value": null
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/74.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/74.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/74.jpg"
+      },
+      "nat": "NZ"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Jake",
+        "last": "Green"
+      },
+      "location": {
+        "street": {
+          "number": 8502,
+          "name": "Southampton Street"
+        },
+        "city": "Gisborne",
+        "state": "Bay of Plenty",
+        "country": "New Zealand",
+        "postcode": 77952,
+        "coordinates": {
+          "latitude": "6.4227",
+          "longitude": "136.5382"
+        },
+        "timezone": {
+          "offset": "+8:00",
+          "description": "Beijing, Perth, Singapore, Hong Kong"
+        }
+      },
+      "email": "jake.green@example.com",
+      "login": {
+        "uuid": "cc568f88-957f-4430-80b4-e64e9a031b57",
+        "username": "ticklishgorilla156",
+        "password": "paradise",
+        "salt": "EpPzKJPb",
+        "md5": "68fdd788f227cd27dc8a9fe08c0a7f1c",
+        "sha1": "2d4ce19dabedb6e501c819fbda5ccb0afccaf8e4",
+        "sha256": "5606f23a6bf413b724ec34a7e438d8a8a6a5497e91a07296f52a113c4411bcf8"
+      },
+      "dob": {
+        "date": "1973-04-17T10:19:04.268Z",
+        "age": 50
+      },
+      "registered": {
+        "date": "2010-02-11T03:17:14.808Z",
+        "age": 13
+      },
+      "phone": "(445)-318-5956",
+      "cell": "(059)-404-7178",
+      "id": {
+        "name": "",
+        "value": null
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/60.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/60.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/60.jpg"
+      },
+      "nat": "NZ"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Nathaniel",
+        "last": "Edwards"
+      },
+      "location": {
+        "street": {
+          "number": 9688,
+          "name": "Beach Road"
+        },
+        "city": "Porirua",
+        "state": "Marlborough",
+        "country": "New Zealand",
+        "postcode": 70285,
+        "coordinates": {
+          "latitude": "-25.6510",
+          "longitude": "-164.5472"
+        },
+        "timezone": {
+          "offset": "+10:00",
+          "description": "Eastern Australia, Guam, Vladivostok"
+        }
+      },
+      "email": "nathaniel.edwards@example.com",
+      "login": {
+        "uuid": "b54a783d-dc31-4c74-a699-a0ad61869778",
+        "username": "happybird677",
+        "password": "buddy1",
+        "salt": "H3rd1EZF",
+        "md5": "4e0a6de5a8c5de98325eefb3720b529a",
+        "sha1": "c7f3787ee5fa98e090f3f214e8694d27030078f1",
+        "sha256": "8ed8c5210bcbee4553788e79b7c39f7191099c09e218f663245a300cd07c4e6c"
+      },
+      "dob": {
+        "date": "1956-01-07T03:59:02.371Z",
+        "age": 67
+      },
+      "registered": {
+        "date": "2020-03-24T23:52:49.378Z",
+        "age": 3
+      },
+      "phone": "(567)-914-4492",
+      "cell": "(428)-192-9983",
+      "id": {
+        "name": "",
+        "value": null
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/39.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/39.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/39.jpg"
+      },
+      "nat": "NZ"
+    }
+  ],
+  "info": {
+    "seed": "92c3571d0fbecf02",
+    "results": 5,
+    "page": 1,
+    "version": "1.4"
+  }
+}

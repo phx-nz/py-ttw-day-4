@@ -9,8 +9,8 @@ from models.profile import Profile
 from services.profile import ProfileService
 
 
-@pytest.fixture(autouse=True)
-def profiles(monkeypatch) -> list[Profile]:
+@pytest.fixture(name="profiles", autouse=True)
+def fixture_profiles(monkeypatch) -> list[Profile]:
     """
     Injects a known set of profiles into our "database", so that
     :py:func:`services.profile.load_profiles` returns a deterministic result.
