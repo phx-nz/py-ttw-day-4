@@ -12,7 +12,7 @@ from rich import print as rich_print
 
 from cli.async_support import embed_event_loop
 from models.profile import Profile
-from services.profile import save_profiles
+from services.profile import ProfileService
 
 app = typer.Typer()
 
@@ -63,6 +63,6 @@ async def generate_profiles(
         rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
 
     rich_print(f"[green]Saving profiles to {TARGET_PATH}...[/green]")
-    save_profiles(profiles)
+    ProfileService.save_profiles(profiles)
 
     rich_print("[green]Done![/green]")
