@@ -37,6 +37,19 @@ You can confirm the server is running by going to
    You can find the command that pipenv runs under the hood in ``Pipfile`` under the
    ``[scripts]`` heading.
 
+Running with Docker
+~~~~~~~~~~~~~~~~~~~
+You can also run the app inside a Docker container.  Use the following command::
+
+   pipenv run docker-start
+
+When the Docker container runs, it will mount your local codebase as a volume, so that
+as you make changes to your code, the server will automatically reload 😎
+
+To stop the Docker container, run the following command::
+
+   pipenv run docker-stop
+
 Checking code quality
 ---------------------
 You can manually run code quality checks with the following commands::
