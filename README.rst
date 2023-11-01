@@ -31,12 +31,27 @@ Docker container::
 
    pipenv run docker-start
 
-When the Docker container runs, it will mount your local codebase as a volume, so that
-as you make changes to your code, the server will automatically reload 😎
+This will start both the app server and the Postgres database server.
 
-To stop the Docker container, run the following command::
+.. tip::
+
+   When the Docker container runs, it will mount your local codebase as a volume, so
+   that as you make changes to your code, the server will automatically reload 😎
+
+To stop the Docker containers, run the following command::
 
    pipenv run docker-stop
+
+Database management
+-------------------
+The database container stores its data in a volume, so that they are persisted when the
+container is stopped.  If you want to restore the database to its initial (empty) state,
+run the following commands::
+
+   pipenv run docker-stop
+   pipenv run docker-reset-db
+
+The next time you start the Docker containers, the database will be re-initialised.
 
 Checking code quality
 ---------------------

@@ -5,8 +5,64 @@ services:
       # Important: this path must be relative to the `context` dir, not the directory
       # that `docker-compose.yml` is in.
       dockerfile: ./docker/app-development.dockerfile
+
+    # File must be named `.env` and be in the same directory as `docker-compose.yml`.
+    # :see: https://stackoverflow.com/a/50593180/5568265
+    env_file: .env
+
+    environment:
+      # Override `DB_HOST=localhost` in `.env` with hostname of DB container.
+      DB_HOST: py-ttw-day-2-db
+
     hostname: py-ttw-day-2-app
+
+    # Make sure both containers are connected to the same network, so that they can talk
+    # to each other.
+    # The name `backend` comes from the network declared under `networks` at the bottom
+    # of this file.
+    networks:
+      - backend
+
     ports:
       - "8000:8000"
     volumes:
       - ..:/app
+
+  db:
+    # Build from a dockerfile, so that we can inject an initialisation script.
+    # See db-development.dockerfile for more information.
+    build:
+      context: .
+      dockerfile: db-development.dockerfile
+
+    # File must be named `.env` and be in the same directory as `docker-compose.yml`.
+    # :see: https://stackoverflow.com/a/50593180/5568265
+    env_file: .env
+
+    # Make sure the app's ``DB_HOST`` env var matches this hostname (see above).
+    hostname: py-ttw-day-2-db
+
+    ports:
+      - '5432:5432'
+
+    # Make sure both containers are connected to the same network, so that they can talk
+    # to each other.
+    # The name `backend` comes from the network declared under `networks` at the bottom
+    # of this file.
+    networks:
+      - backend
+
+    # Mount database files in a volume, so that they are persisted when the container is
+    # stopped.
+    # The name `db-data` comes from the volume which is declared under `volumes` at the
+    # bottom of this file.
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  backend: {}
+
+volumes:
+  # Important: if you change the name of this volume, be sure to update the
+  # `docker-reset-db` script in `Pipfile` to match.
+  db-data: {}
