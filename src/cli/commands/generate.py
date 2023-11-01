@@ -14,29 +14,17 @@ from cli.async_support import embed_event_loop
 from models.profile import Profile
 from services.profile import ProfileService
 
-app = typer.Typer()
+# Create a Typer instance to hold CLI commands for the ``generate`` namespace (similar
+# to how we use routers in FastAPI).
+app = typer.Typer(name="generate")
 
+# A few constants that will be used by :py:func:`generate_profiles` below.
 API_URL_TEMPLATE = "https://randomuser.me/api/?nat=NZ&results={count}"
 DEFAULT_COUNT = 5
 TARGET_PATH = Path(__file__).parent.parent.parent / "data" / "profiles.json"
 
 
-def extract_profile(raw_data: dict, **extras) -> Profile:
-    """
-    Extracts profile data from a single object in the API response.
-    """
-    return Profile(
-        username=raw_data["login"]["username"],
-        password=raw_data["login"]["password"],
-        gender=raw_data["gender"],
-        full_name=f'{raw_data["name"]["first"]} {raw_data["name"]["last"]}',
-        street_address=f'{raw_data["location"]["street"]["number"]} '
-        f'{raw_data["location"]["street"]["name"]}',
-        email=raw_data["email"],
-        **extras,
-    )
-
-
+# This command can be invoked by running ``pipenv run app-cli generate profiles``.
 @app.command("profiles")
 @embed_event_loop
 async def generate_profiles(
@@ -73,3 +61,19 @@ async def generate_profiles(
     ProfileService.save_profiles(profiles)
 
     rich_print("[green]Done![/green]")
+
+
+def extract_profile(raw_data: dict, **extras) -> Profile:
+    """
+    Extracts profile data from a single object in the API response.
+    """
+    return Profile(
+        username=raw_data["login"]["username"],
+        password=raw_data["login"]["password"],
+        gender=raw_data["gender"],
+        full_name=f'{raw_data["name"]["first"]} {raw_data["name"]["last"]}',
+        street_address=f'{raw_data["location"]["street"]["number"]} '
+        f'{raw_data["location"]["street"]["name"]}',
+        email=raw_data["email"],
+        **extras,
+    )
