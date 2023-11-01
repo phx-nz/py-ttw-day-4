@@ -1,9 +1,10 @@
 # :see: https://packaging.python.org/en/latest/specifications/declaring-project-metadata
 
 [project]
+# Keep the same distro name as Day 2, to avoid conflicts.
 name = "py-ttw-day-2"
 version = "1.0.0"
-description = "Starting point for Python Tech Transformation Workshop day 2"
+description = "Starting point for Python Tech Transformation Workshop day 3"
 readme = "README.rst"
 requires-python = ">= 3.12"
 license = { text = "© 2023 PHX Limited - All Rights Reserved" }
