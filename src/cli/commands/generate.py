@@ -21,6 +21,22 @@ DEFAULT_COUNT = 5
 TARGET_PATH = Path(__file__).parent.parent.parent / "data" / "profiles.json"
 
 
+def extract_profile(raw_data: dict, **extras) -> Profile:
+    """
+    Extracts profile data from a single object in the API response.
+    """
+    return Profile(
+        username=raw_data["login"]["username"],
+        password=raw_data["login"]["password"],
+        gender=raw_data["gender"],
+        full_name=f'{raw_data["name"]["first"]} {raw_data["name"]["last"]}',
+        street_address=f'{raw_data["location"]["street"]["number"]} '
+        f'{raw_data["location"]["street"]["name"]}',
+        email=raw_data["email"],
+        **extras,
+    )
+
+
 @app.command("profiles")
 @embed_event_loop
 async def generate_profiles(
@@ -46,17 +62,8 @@ async def generate_profiles(
     # relational-database-like developer experience.
     rich_print("[green]Transforming profiles...[/green]")
     profiles = [
-        Profile(
-            id=profile_id,
-            username=profile["login"]["username"],
-            password=profile["login"]["password"],
-            gender=profile["gender"],
-            full_name=f'{profile["name"]["first"]} {profile["name"]["last"]}',
-            street_address=f'{profile["location"]["street"]["number"]} '
-            f'{profile["location"]["street"]["name"]}',
-            email=profile["email"],
-        )
-        for profile_id, profile in enumerate(raw_profiles, 1)
+        extract_profile(raw_profile_data, id=profile_id)
+        for profile_id, raw_profile_data in enumerate(raw_profiles, start=1)
     ]
 
     for profile in profiles:

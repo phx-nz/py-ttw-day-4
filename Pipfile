@@ -20,6 +20,7 @@ ipython = "*"
 orjson = "*"
 pipenv = "*"
 pytest = "*"
+pytest-httpx = "*"
 ruff = "*"
 typer = { extras = ["all"], version = "*" }
 

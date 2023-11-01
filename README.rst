@@ -132,7 +132,8 @@ profile ID 3.
       example.
 
       Note how it uses the ``client`` fixture.  You can find the definition for this
-      fixture in `test/integration/conftest.py <./test/integration/conftest.py>`_.
+      fixture in
+      `test/integration/api/conftest.py <./test/integration/api/conftest.py>`_.
 
 #. Now let's switch back to the API endpoint and get it to load some actual profile
    data.
