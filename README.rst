@@ -296,5 +296,4 @@ Don't forget to write unit tests!  You can find some examples in
 .. _FastAPI: https://fastapi.tiangolo.com/
 .. _FastAPI documentation: https://fastapi.tiangolo.com/tutorial/first-steps/#interactive-api-docs
 .. _Random User Generator API: https://randomuser.me/documentation
-.. _tox: https://tox.readthedocs.io
 .. _uvicorn: https://www.uvicorn.org/
