@@ -238,6 +238,7 @@ Lastly, add an integration test and update your CLI command so that it raises a
 Here are some hints to help you:
 
 - After invoking the CLI command in your test, can check the exception:
+
   - Check the exception type: ``assert isinstance(result.exception, ValueError)``
   - Check the exception message; ``assert "999" in str(result.exception)``
 
@@ -249,7 +250,8 @@ challenges, give these a try 😺
 - Try adding a CLI command to create a new profile (e.g.,
   ``pipenv run app-cli profiles create /path/to/data.json``).
 - Get the CLI commands to validate the JSON data using Pydantic.
+
   - Hint: you can reuse the Pydantic model you created for
     ``PUT /v1/profile/{profile_id}``.
 
-.. Typer: https://typer.tiangolo.com
+.. _Typer: https://typer.tiangolo.com
