@@ -119,11 +119,15 @@ profile ID 3.
    programmatically verify that our endpoint is working properly.
 
    Add a new file to `test/integration/v1 <./test/integration/v1>`_ that will hold the
-   integration tests for your new API endpoint.  Write a simple test that checks for a
-   200 response from your API endpoint.
+   integration tests for your new API endpoint (for example, ``test_get_profile.py``).
 
-   Don't worry about checking for profile data in the response body yet; we'll tackle
-   that a bit later.
+   .. important::
+
+      The filename must start with ``test_`` in order for pytest to find it.
+
+   Write a simple test that checks for a 200 response from your API endpoint.  Don't
+   worry about checking for profile data in the response body yet; we'll tackle that a
+   bit later.
 
    .. tip::
 
@@ -281,17 +285,18 @@ Step 4: Edit profile by ID (nonexistent ID)
 Lastly, add an integration test and update your API endpoint so that a request to edit a
 nonexistent profile will get a 404 response.
 
-Step 5: Stretch Refactoring
----------------------------
-This step is optional.  If you're feeling confident and want to tackle an extra
-challenge, give it a try 😺
+Step 5: Stretch Goals
+---------------------
+This step is optional.  If you're feeling confident and want to tackle some extra
+challenges, give it a try 😺
 
-We probably have too much logic in our controllers.  Try refactoring out the
-functionality to get and edit profiles into
-`src/services/profile.py <./src/services/profile.py>`_.
+- Try adding an API endpoint to create a new profile (e.g., ``POST /v1/profile``).
+- We probably have too much logic in our controllers.  Try refactoring out the
+  functionality to get and edit profiles into
+  `src/services/profile.py <./src/services/profile.py>`_.
 
-Don't forget to write unit tests!  You can find some examples in
-`test/unit/services/test_profile.py <test/unit/services/test_profile.py>`_.
+  Don't forget to write unit tests!  You can find some examples in
+  `test/unit/services/test_profile.py <test/unit/services/test_profile.py>`_.
 
 
 .. _FastAPI: https://fastapi.tiangolo.com/

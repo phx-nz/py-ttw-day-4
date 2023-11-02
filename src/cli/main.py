@@ -13,7 +13,7 @@ from cli.commands import generate
 
 app = typer.Typer()
 
-# Activate commands.
+# Register commands so that they can be invoked.
 app.add_typer(generate.app)
 
 if __name__ == "__main__":

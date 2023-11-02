@@ -15,7 +15,7 @@ from .routers import v1
 # Initialise the FastAPI application.
 app = FastAPI()
 
-# Activate routers to serve the API endpoints.
+# Register routers to serve the API endpoints.
 app.include_router(v1.router)
 
 

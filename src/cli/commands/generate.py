@@ -45,8 +45,14 @@ async def generate_profiles(
     rich_print(f"[grey]{url}[/grey]")
 
     async with AsyncClient() as client:
-        # :see: https://randomuser.me/documentation#results
-        raw_profiles = (await client.get(url)).json()["results"]
+        response = (await client.get(url)).json()
+
+    # :see: https://randomuser.me/documentation#errors
+    if "error" in response:
+        raise ValueError(response["error"])
+
+    # :see: https://randomuser.me/documentation#results
+    raw_profiles = response["results"]
 
     rich_print("[green]Transforming profiles...[/green]")
     profiles = [
