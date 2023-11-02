@@ -315,9 +315,11 @@ challenges, give it a try 😺
 
   Don't forget to write unit tests!  You can find some examples in
   `test/unit/services/test_profile.py <test/unit/services/test_profile.py>`_.
+- The built-in ``json`` library is a bit on the slow side.  Try using `orjson`_ instead.
 
 
 .. _FastAPI: https://fastapi.tiangolo.com/
 .. _FastAPI documentation: https://fastapi.tiangolo.com/tutorial/first-steps/#interactive-api-docs
+.. _orjson: https://pypi.org/project/orjson/
 .. _Random User Generator API: https://randomuser.me/documentation
 .. _uvicorn: https://www.uvicorn.org/
