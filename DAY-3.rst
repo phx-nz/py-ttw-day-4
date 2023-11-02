@@ -41,15 +41,17 @@ specified profile in JSON format:
 
    pipenv run app-cli profiles get {profile_id}
 
-#. Create a new file under `cli/commands <./cli/commands>`_ named ``profiles.py``.  This
-   file will hold all the CLI commands that you create under the ``profiles`` namespace.
+#. Create a new file under `src/cli/commands <./src/cli/commands>`_ named
+   ``profiles.py``.  This file will hold all the CLI commands that you create under the
+   ``profiles`` namespace.
 
-#. Look at `cli/commands/generate.py <cli/commands/generate.py>`_ to see how to create a
-   new command (using the ``Typer`` class) and a new subcommand (using the
+#. Look at `src/cli/commands/generate.py <./src/cli/commands/generate.py>`_ to see how
+   to create a new command (using the ``Typer`` class) and a new subcommand (using the
    ``Typer.command`` decorator).
 
-#. Based on what you saw in `cli/commands/generate.py <cli/commands/generate.py>`_,
-   create a new ``profiles`` command, and a ``get`` subcommand under it.
+#. Based on what you saw in
+   `src/cli/commands/generate.py <./src/cli/commands/generate.py>`_, create a new
+   ``profiles`` command, and a ``get`` subcommand under it.
 
    Don't worry about fetching profile data yet.  Just have your function output
    something like "Kia ora te ao!" so that you can verify it's working.
