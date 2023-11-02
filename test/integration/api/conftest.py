@@ -1,5 +1,5 @@
 """
-Common fixtures used by integration tests.
+Common fixtures used by API integration tests.
 
 :see: https://docs.pytest.org/en/7.4.x/reference/fixtures.html#conftest-py-sharing-fixtures-across-multiple-files
 """
