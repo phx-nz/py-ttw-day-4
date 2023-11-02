@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+orjson = "*"
 pydantic = "*"
 uvicorn = { extras = ["standard"], version = "*" }
 
@@ -17,7 +18,6 @@ autohooks-plugin-ruff = "*"
 black = "*"
 httpx = "*"
 ipython = "*"
-orjson = "*"
 pipenv = "*"
 pytest = "*"
 pytest-httpx = "*"
