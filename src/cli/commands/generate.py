@@ -25,6 +25,8 @@ TARGET_PATH = Path(__file__).parent.parent.parent / "data" / "profiles.json"
 
 
 # This command can be invoked by running ``pipenv run app-cli generate profiles``.
+# Note that we have to use ``@embed_event_loop`` because this function is asynchronous.
+# See the docstring for :py:func:`cli.async_support.embed_event_loop` for more info.
 @app.command("profiles")
 @embed_event_loop
 async def generate_profiles(
@@ -40,14 +42,12 @@ async def generate_profiles(
     rich_print(f"[green]Loading [cyan]{count}[/cyan] profiles...[/green]")
 
     url = API_URL_TEMPLATE.format(count=count)
-    rich_print(url)
+    rich_print(f"[grey]{url}[/grey]")
 
     async with AsyncClient() as client:
         # :see: https://randomuser.me/documentation#results
         raw_profiles = (await client.get(url)).json()["results"]
 
-    # RUG creates deeply-nested objects, so we'll need to flatten them to create a more
-    # relational-database-like developer experience.
     rich_print("[green]Transforming profiles...[/green]")
     profiles = [
         extract_profile(raw_profile_data, id=profile_id)
@@ -65,7 +65,11 @@ async def generate_profiles(
 
 def extract_profile(raw_data: dict, **extras) -> Profile:
     """
-    Extracts profile data from a single object in the API response.
+    Random User Generator API returns deeply-nested objects, so this function flattens
+    each one, in order to create a more relational-database-like developer experience.
+
+    :param raw_data: the raw object from the API response.
+    :param extras: additional values to include in the profile (i.e., ``id``).
     """
     return Profile(
         username=raw_data["login"]["username"],
