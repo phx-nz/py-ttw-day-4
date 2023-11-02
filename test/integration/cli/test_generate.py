@@ -2,6 +2,7 @@ from pathlib import Path
 
 import orjson
 import pytest
+from click.testing import Result
 from pytest_httpx import HTTPXMock
 
 from cli.commands.generate import extract_profile
@@ -18,7 +19,7 @@ def fixture_mock_api_data() -> dict:
 
     :see: ./generate/mock_api_response.json
     """
-    with open(Path(__file__).parent / "generate" / "mock_api_response.json", "rb") as f:
+    with open(Path(__file__).parent / "data" / "mock_api_response.json", "rb") as f:
         # Don't ``yield`` here; no need to keep the file handle open during the test.
         data = orjson.loads(f.read())
 
@@ -71,7 +72,7 @@ def test_generate_profiles_happy_path(
     Successfully generating and installing profiles from the API service.
     """
     result = runner.invoke(["generate", "profiles"])
-    assert result.exit_code == 0
+    assert result.exception is None
 
     # This command outputs lots of stuff, but what we're really interested in is
     # confirming that it found the correct profiles in the API response.
@@ -91,3 +92,21 @@ def test_generate_profiles_happy_path(
             mock_api_response["results"], start=1
         )
     ]
+
+
+def test_generate_profiles_error(
+    httpx_mock: HTTPXMock, profiles: list[Profile], runner: TestCliRunner
+):
+    """
+    The command outputs a sensible error message when the API returns an error.
+    """
+    # :see: https://randomuser.me/documentation#errors
+    error = "Uh oh, something has gone wrong. Please tweet us @randomapi about the issue. Thank you."
+    httpx_mock.add_response(json={"error": error})
+
+    result: Result = runner.invoke(["generate", "profiles"])
+    assert isinstance(result.exception, ValueError)
+    assert str(result.exception) == error
+
+    # Verify that our "database" was not modified.
+    assert ProfileService.load_profiles() == profiles
