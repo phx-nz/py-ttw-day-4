@@ -1,12 +1,16 @@
 .. image:: https://github.com/phx-nz/py-ttw-day-3/actions/workflows/build.yml/badge.svg
    :target: https://github.com/phx-nz/py-ttw-day-3/actions/workflows/build.yml
 
-Workshop Day 3: Docker, Typer, and SQLAlchemy
-=============================================
+Workshop Day 3: SQLAlchemy
+==========================
 The goal of today's workshop is to augment the `FastAPI`_ application that you built
-yesterday, adding CLI commands via `Typer`_ and integrating a database with
-`SQLAlchemy`_.
+yesterday, replacing the file-based "database" with a proper Postgres server, and using
+`SQLAlchemy`_ to interact with it.
 
+The Postgres server has already been set up for you.  After pulling down the changes
+from origin, re-run the command to start the server, and it will automatically start and
+configure the Postgres server for you.  Check out the updated files in the
+`docker folder <./docker>`_ for more information.
 
 
 Installation
@@ -38,12 +42,27 @@ This will start both the app server and the Postgres database server.
    When the Docker container runs, it will mount your local codebase as a volume, so
    that as you make changes to your code, the server will automatically reload 😎
 
+   Note that if you make any changes that would require a rebuild (e.g., add
+   dependencies to ``Pipfile``), then you'll need to stop and restart the container.
+
 To stop the Docker containers, run the following command::
 
    pipenv run docker-stop
 
 Database management
 -------------------
+You can connect to the database container using your IDE.  Use the following
+configuration values:
+
+- Hostname: ``localhost``
+- Port:     5432
+- Username: ``developer``
+- Password: ``Bo5doh4oobaeGheeS6neeCoo4aicha9aishah6Chievieng6aethaebai8aimula``
+- Database: ``app``
+- Schema: ``public``
+
+Resetting the database
+~~~~~~~~~~~~~~~~~~~~~~
 The database container stores its data in a volume, so that they are persisted when the
 container is stopped.  If you want to restore the database to its initial (empty) state,
 run the following commands::
@@ -99,5 +118,4 @@ Exercise Instructions
 .. _FastAPI documentation: https://fastapi.tiangolo.com/tutorial/first-steps/#interactive-api-docs
 .. _Random User Generator API: https://randomuser.me/documentation
 .. _SQLAlchemy: https://www.sqlalchemy.org/
-.. _Typer: https://typer.tiangolo.com/
 .. _uvicorn: https://www.uvicorn.org/
