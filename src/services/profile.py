@@ -1,45 +1,36 @@
 __all__ = ["ProfileService"]
 
-from pathlib import Path
+from typing import Iterable, Sequence
 
-import orjson
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from models.profile import Profile
+from models import Profile
+from models.service import BaseOrmService
 
 
-class ProfileService:
+class ProfileService(BaseOrmService):
     """
     Use cases for working with profiles.
     """
 
-    @staticmethod
-    def load_profiles() -> list[Profile]:
-        """
-        Loads profiles from the data file.
-
-        Note that this function is synchronous, which is not ideal for I/O operations.
-        It's OK for now because we'll replace it with a proper database tomorrow (:
-        """
-        with open(ProfileService._get_data_file(), "rb") as f:
-            return [Profile(**record) for record in orjson.loads(f.read())]
+    provides = "profile"
 
     @staticmethod
-    def save_profiles(profiles: list[Profile]) -> None:
+    async def load_profiles(session: AsyncSession) -> Sequence[Profile]:
         """
-        Saves profiles to the data file, replacing anything that's currently there.
-
-        Note that this function is synchronous, which is not ideal for I/O operations.
-        It's OK for now because we'll replace it with a proper database tomorrow (:
+        Returns all profiles in the database, un-paginated.  Handy tool for unit tests,
+        and utter disaster everywhere else (:
         """
-        with open(ProfileService._get_data_file(), "wb") as f:
-            f.write(orjson.dumps(list(map(dict, profiles)), option=orjson.OPT_INDENT_2))
+        return (await session.scalars(select(Profile))).all()
 
     @staticmethod
-    def _get_data_file() -> Path:
+    def save_profiles(session: AsyncSession, profiles: Iterable[Profile]) -> None:
         """
-        Returns the path to the file where profiles are stored.
+        Saves profiles to the database.
 
-        Written as its own function so that we can mock it during unit tests.
+        Note that this method does **not** replace existing profiles!
+
+        .. important:: Remember to call ``session.commit()`` to commit the transaction.
         """
-        # src/data/profiles.json
-        return Path(__file__).parent.parent / "data" / "profiles.json"
+        session.add_all(profiles)

@@ -1,34 +1,37 @@
 """
 Unit tests for the profile service.
 """
+import pytest
 
 from models.profile import Profile
+from services import get_service
 from services.profile import ProfileService
 
 
-def test_load_profiles(profiles: list[Profile]):
+@pytest.fixture(name="service")
+def fixture_service() -> ProfileService:
     """
-    Sanity check, to make sure :py:func:services.profile.load_profiles works as
+    Convenience alias for the ProfileService.
+    """
+    yield get_service(ProfileService)
+
+
+async def test_load_profiles(profiles: list[Profile], service: ProfileService):
+    """
+    Sanity check, to make sure :py:meth:`ProfileService.load_profiles` works as
     expected.
-
-    Note that the ``profiles`` fixture monkey-patches the service to load/save profiles
-    in a temporary file.
     """
-    loaded_profiles = ProfileService.load_profiles()
-    assert loaded_profiles == profiles
+    async with service.session() as session:
+        assert await service.load_profiles(session) == profiles
 
 
-def test_save_profiles():
+async def test_save_profiles(profiles: list[Profile], service: ProfileService):
     """
-    Sanity check, to make sure :py:func:services.profile.save_profiles works as
+    Sanity check, to make sure :py:meth:`ProfileService.save_profiles` works as
     expected.
-
-    Note that we declared the ``profiles`` fixture as ``autouse=True``, so it will
-    run for this test even though we didn't include it in the test function parameters.
     """
     new_profiles = [
         Profile(
-            id=1,
             username="orangelion962",
             password="1952",
             gender="male",
@@ -37,7 +40,6 @@ def test_save_profiles():
             email="arlo.edwards@example.com",
         ),
         Profile(
-            id=2,
             username="organicwolf415",
             password="julius",
             gender="female",
@@ -47,7 +49,8 @@ def test_save_profiles():
         ),
     ]
 
-    ProfileService.save_profiles(new_profiles)
+    async with service.session() as session:
+        service.save_profiles(session, new_profiles)
+        await session.commit()
 
-    loaded_profiles = ProfileService.load_profiles()
-    assert loaded_profiles == new_profiles
+        assert await service.load_profiles(session) == [*profiles, *new_profiles]

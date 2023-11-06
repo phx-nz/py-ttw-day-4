@@ -64,7 +64,7 @@ async def generate_profiles(
     profile_service: ProfileService = get_service(ProfileService)
 
     async with profile_service.session(expire_on_commit=False) as session:
-        session.add_all(profiles)
+        profile_service.save_profiles(session, profiles)
         await session.commit()
 
     for profile in profiles:
@@ -73,14 +73,15 @@ async def generate_profiles(
     rich_print("[green]Done![/green]")
 
 
-def extract_profile(raw_data: dict) -> Profile:
+def extract_profile(raw_data: dict, id: int | None = None) -> Profile:
     """
     Random User Generator API returns deeply-nested objects, so this function flattens
     each one, in order to create a more relational-database-like developer experience.
 
     :param raw_data: the raw object from the API response.
+    :param id: ID to assign to the object (if needed).
     """
-    return Profile(
+    profile = Profile(
         username=raw_data["login"]["username"],
         password=raw_data["login"]["password"],
         gender=raw_data["gender"],
@@ -89,3 +90,8 @@ def extract_profile(raw_data: dict) -> Profile:
         f'{raw_data["location"]["street"]["name"]}',
         email=raw_data["email"],
     )
+
+    if id is not None:
+        profile.id = id
+
+    return profile
