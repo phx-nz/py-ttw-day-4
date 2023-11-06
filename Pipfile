@@ -6,11 +6,17 @@ name = "pypi"
 [packages]
 fastapi = "*"
 orjson = "*"
+phx-class-registry = "*"
+psycopg = {extras = ["pool", "binary"], version = "*"}
 pydantic = "*"
+pydantic-settings = "*"
+sqlalchemy = {extras = ["asyncio"], version = "*"}
 uvicorn = { extras = ["standard"], version = "*" }
 
 [dev-packages]
 py-ttw-day-2 = { file = ".", editable = true }
+aiosqlite = "*"
+alembic = "*"
 autohooks = "*"
 autohooks-plugin-black = "*"
 autohooks-plugin-pytest = "*"
@@ -20,6 +26,7 @@ httpx = "*"
 ipython = "*"
 pipenv = "*"
 pytest = "*"
+pytest-asyncio = "*"
 pytest-httpx = "*"
 ruff = "*"
 typer = { extras = ["all"], version = "*" }

@@ -6,9 +6,9 @@ services:
       # that `docker-compose.yml` is in.
       dockerfile: ./docker/app-development.dockerfile
 
-    # File must be named `.env` and be in the same directory as `docker-compose.yml`.
-    # :see: https://stackoverflow.com/a/50593180/5568265
-    env_file: .env
+    env_file:
+      - ../.env
+      - ../.env.development
 
     environment:
       # Override `DB_HOST=localhost` in `.env` with hostname of DB container.
@@ -35,9 +35,8 @@ services:
       context: .
       dockerfile: db-development.dockerfile
 
-    # File must be named `.env` and be in the same directory as `docker-compose.yml`.
-    # :see: https://stackoverflow.com/a/50593180/5568265
-    env_file: .env
+    env_file:
+      - ../.env.development
 
     # Make sure the app's ``DB_HOST`` env var matches this hostname (see above).
     hostname: py-ttw-day-2-db

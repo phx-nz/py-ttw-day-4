@@ -22,3 +22,6 @@ pre-commit = [
     "autohooks.plugins.ruff",
     "autohooks.plugins.pytest"
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

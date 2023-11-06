@@ -37,6 +37,14 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 VOLUME ["/app"]
 ENV PYTHONPATH="/app/src:$PYTHONPATH"
 
+# Prevent `pipenv run` from overwriting environment variables from `.env`.
+# https://pipenv.pypa.io/en/latest/shell/#automatic-loading-of-env
+ENV PIPENV_DONT_LOAD_ENV=1
+
+# Configure the app for development mode.
+# See `src/services/config.py` for more info.
+ENV PY_ENV="development"
+
 # Expose port 8000, so that uvicorn can receive external requests.
 #
 # On your development system, you can access the app at http://localhost:8000

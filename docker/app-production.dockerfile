@@ -11,7 +11,7 @@ WORKDIR /app
 # Create a virtualenv so that it's easy to copy dependencies into the app image.
 # Otherwise everything would get installed in `/usr/local`, which gets messy.
 ENV VIRTUAL_ENV=/opt/venv
-RUN python -m venv $VIRTUAL_ENV
+RUN python -m venv "$VIRTUAL_ENV"
 # https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
@@ -31,10 +31,18 @@ ENV VIRTUAL_ENV=/opt/venv
 COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
+# Prevent `pipenv run` from overwriting environment variables from `.env`.
+# https://pipenv.pypa.io/en/latest/shell/#automatic-loading-of-env
+ENV PIPENV_DONT_LOAD_ENV=1
+
+# Configure the app for production mode.
+# See `src/services/config.py` for more info.
+ENV PY_ENV="production"
+
 # Copy application code and Pipfile.
 # Pipfile.lock isn't strictly needed, but we'll include it just so that we have a
 # convenient record of what dependencies were installed.
-COPY ../src Pipfile Pipfile.lock /app/
+COPY src Pipfile Pipfile.lock /app/
 
 # Expose port 8000, so that uvicorn can receive external requests.
 #

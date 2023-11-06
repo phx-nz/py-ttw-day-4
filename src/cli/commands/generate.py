@@ -12,6 +12,7 @@ from rich import print as rich_print
 
 from cli.async_support import embed_event_loop
 from models.profile import Profile
+from services import get_service
 from services.profile import ProfileService
 
 # Create a Typer instance to hold CLI commands for the ``generate`` namespace (similar
@@ -33,11 +34,10 @@ async def generate_profiles(
     count: typing.Annotated[int, typer.Argument()] = DEFAULT_COUNT
 ):
     """
-    Generates profile data using Random User Generator API (https://randomuser.me/).
+    Generates profile data using Random User Generator API (https://randomuser.me/) and
+    adds them to the database.
 
-    Results are stored in ``data/profiles.json``.
-
-    Note that downloaded profiles will replace existing ones.
+    Note: existing profiles will **not** be removed!
     """
     rich_print(f"[green]Loading [cyan]{count}[/cyan] profiles...[/green]")
 
@@ -56,26 +56,29 @@ async def generate_profiles(
 
     rich_print("[green]Transforming profiles...[/green]")
     profiles = [
-        extract_profile(raw_profile_data, id=profile_id)
+        extract_profile(raw_profile_data)
         for profile_id, raw_profile_data in enumerate(raw_profiles, start=1)
     ]
+
+    rich_print(f"[green]Saving profiles to {TARGET_PATH}...[/green]")
+    profile_service: ProfileService = get_service(ProfileService)
+
+    async with profile_service.session(expire_on_commit=False) as session:
+        session.add_all(profiles)
+        await session.commit()
 
     for profile in profiles:
         rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
 
-    rich_print(f"[green]Saving profiles to {TARGET_PATH}...[/green]")
-    ProfileService.save_profiles(profiles)
-
     rich_print("[green]Done![/green]")
 
 
-def extract_profile(raw_data: dict, **extras) -> Profile:
+def extract_profile(raw_data: dict) -> Profile:
     """
     Random User Generator API returns deeply-nested objects, so this function flattens
     each one, in order to create a more relational-database-like developer experience.
 
     :param raw_data: the raw object from the API response.
-    :param extras: additional values to include in the profile (i.e., ``id``).
     """
     return Profile(
         username=raw_data["login"]["username"],
@@ -85,5 +88,4 @@ def extract_profile(raw_data: dict, **extras) -> Profile:
         street_address=f'{raw_data["location"]["street"]["number"]} '
         f'{raw_data["location"]["street"]["name"]}',
         email=raw_data["email"],
-        **extras,
     )

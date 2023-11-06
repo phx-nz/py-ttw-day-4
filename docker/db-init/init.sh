@@ -2,7 +2,7 @@
 # See https://hub.docker.com/_/postgres/ ("Initialization scripts")
 set -ev
 
-echo "CREATE DATABASE $DB_DATABASE ENCODING 'UTF-8';" | psql -v ON_ERROR_STOP=1
+echo "CREATE DATABASE $DB_DATABASE WITH ENCODING='UTF-8';" | psql -v ON_ERROR_STOP=1
 echo "CREATE USER $DB_USER;" | psql -v ON_ERROR_STOP=1
 echo "ALTER ROLE $DB_USER PASSWORD '$DB_PASSWORD';" | psql -v ON_ERROR_STOP=1
 
