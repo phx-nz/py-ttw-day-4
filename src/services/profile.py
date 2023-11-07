@@ -22,7 +22,7 @@ class ProfileService(BaseOrmService):
         Returns all profiles in the database, un-paginated.  Handy tool for unit tests,
         and utter disaster everywhere else (:
         """
-        return (await session.scalars(select(Profile))).all()
+        return (await session.scalars(select(Profile))).unique().all()
 
     @staticmethod
     def save_profiles(session: AsyncSession, profiles: Iterable[Profile]) -> None:

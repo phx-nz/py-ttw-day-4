@@ -38,6 +38,7 @@ class MigrationService(BaseService):
         a lot faster to do at the start of each test (:
         """
         async with self.db.engine.begin() as connection:
+            await connection.run_sync(Base.metadata.drop_all)
             await connection.run_sync(Base.metadata.create_all)
 
     def run_migrations_from_env_py(self):
