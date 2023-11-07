@@ -1,14 +1,21 @@
 """
 Global fixtures accessible to all tests for this project.
 """
+import asyncio
 
 import pytest
+import uvloop
 from class_registry import ClassRegistryInstanceCache
 
 from dev.services.migration import MigrationService
 from models import Profile
 from services import ProfileService, base, get_service
 from services.config import Env
+
+# Activate uvloop for improved asyncio performance.
+# :see: https://uvloop.readthedocs.io/
+# :see: https://pytest-asyncio.readthedocs.io/en/latest/how-to-guides/uvloop.html
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 
 @pytest.fixture(name="db", autouse=True)

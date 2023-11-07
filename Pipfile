@@ -12,6 +12,7 @@ pydantic = "*"
 pydantic-settings = "*"
 sqlalchemy = {extras = ["asyncio"], version = "*"}
 uvicorn = { extras = ["standard"], version = "*" }
+uvloop = "*"
 
 [dev-packages]
 py-ttw-day-2 = { file = ".", editable = true }
