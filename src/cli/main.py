@@ -7,10 +7,18 @@ Refer to README.rst for instructions to run commands via the CLI.
 """
 __all__ = ["app"]
 
+import asyncio
+
 import typer
+import uvloop
 
 from cli.commands import generate, profiles
 
+# Activate uvloop for improved asyncio performance.
+# :see: https://uvloop.readthedocs.io/
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
+# Initialise the Typer application.
 app = typer.Typer()
 
 # Register commands so that they can be invoked.

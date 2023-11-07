@@ -7,10 +7,17 @@ Refer to README.rst for instructions to run the server.
 """
 __all__ = ["app"]
 
+import asyncio
+
+import uvloop
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 from .routers import v1
+
+# Activate uvloop for improved asyncio performance.
+# :see: https://uvloop.readthedocs.io/
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 # Initialise the FastAPI application.
 app = FastAPI()
