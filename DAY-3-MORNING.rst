@@ -1,7 +1,7 @@
-Day 3: Docker and Typer
-=======================
-Today we're going to expand on the concepts explored during yesterday's workshop by
-creating a CLI interface for our profile management services.
+Day 3 Morning: Docker and Typer
+===============================
+This morning we're going to expand on the concepts explored during yesterday's workshop
+by creating a CLI interface for our profile management services.
 
 We will also get our application running inside a Docker container, in preparation for
 this afternoon's workshop.
