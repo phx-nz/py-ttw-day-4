@@ -41,17 +41,6 @@ class DatabaseService(BaseService):
                await session.commit()
 
         :param expire_on_commit: whether to expire ORM instances after committing them.
-        Setting this to ``False`` (default) lets the application access ORM instance
-        properties after the session is closed.  The trade-off is that all of this
-        information has to stay loaded in memory (potentially a lot if the instance has
-        lots of eagerly-loaded relations).
-
-        If you don't need to access ORM instance properties after the transaction is
-        closed, you can set ``expire_on_commit=True`` to purge those attributes after
-        the session is closed and save some memory.
-
-        If you're not sure, use the default value (:
-
         :see: https://docs.sqlalchemy.org/en/20/orm/session_state_management.html#session-expire
         """
         session = self.session_factory()
