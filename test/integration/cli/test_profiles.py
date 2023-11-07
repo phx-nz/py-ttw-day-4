@@ -4,10 +4,10 @@ from tempfile import NamedTemporaryFile
 import orjson
 import pytest
 from click.testing import Result
-from fastapi.encoders import jsonable_encoder
 from pydantic import ValidationError
 
 from cli.pytest_utils import TestCliRunner
+from models.base import model_encoder
 from models.profile import Profile
 
 
@@ -39,7 +39,7 @@ def test_get_profile_happy_path(profiles: list[Profile], runner: TestCliRunner):
     # Verify that the result is valid JSON with the correct values.
     # We don't need (nor want) to check how the JSON is formatted (e.g., indentation,
     # ordering, etc.), as that's an implementation detail.
-    assert orjson.loads(result.stdout) == jsonable_encoder(target_profile)
+    assert orjson.loads(result.stdout) == model_encoder(target_profile)
 
 
 def test_get_profile_non_existent(runner: TestCliRunner):
@@ -75,6 +75,7 @@ def test_update_profile_happy_path(
         "full_name": "Ethel Chen",
         "street_address": "3775 Deerswim Lane",
         "email": "ethel.chen@example.com",
+        "awards": [],
     }
 
 
@@ -137,4 +138,4 @@ def test_create_profile_happy_path(
     result: Result = runner.invoke(["profiles", "create", data_filepath])
 
     assert result.exception is None
-    assert orjson.loads(result.stdout) == jsonable_encoder(expected)
+    assert orjson.loads(result.stdout) == model_encoder(expected)

@@ -1,11 +1,11 @@
 """
 User profile model definition.
 """
-__all__ = ["Profile", "ProfileSchema"]
+__all__ = ["Profile"]
 
-from pydantic import BaseModel
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from models.award import Award
 from models.base import Base
 
 
@@ -24,12 +24,9 @@ class Profile(Base):
     street_address: Mapped[str]
     email: Mapped[str]
 
-
-class ProfileSchema(BaseModel):
-    id: int
-    username: str
-    password: str
-    gender: str
-    full_name: str
-    street_address: str
-    email: str
+    awards: Mapped[list[Award]] = relationship(
+        back_populates="profile",
+        default_factory=list,
+        # :see: https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html#what-kind-of-loading-to-use
+        lazy="joined",
+    )

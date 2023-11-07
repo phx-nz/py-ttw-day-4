@@ -2,9 +2,9 @@ __all__ = ["app"]
 
 import orjson
 import typer
-from fastapi.encoders import jsonable_encoder
 
 from cli.async_support import embed_event_loop
+from models.base import model_encoder
 from models.profile import Profile
 from services import get_service
 from services.profile import EditProfileRequest, ProfileService
@@ -85,7 +85,7 @@ def output_profile(profile: Profile) -> None:
     Outputs profile data to stdout.
     """
     # Convert the model instance into a value that can be JSON-encoded.
-    encoded_profile = jsonable_encoder(profile)
+    encoded_profile = model_encoder(profile)
 
     # Finally, output the value in JSON format.
     # Note that :py:func:`orjson.dumps` returns a binary string, so we have to decode

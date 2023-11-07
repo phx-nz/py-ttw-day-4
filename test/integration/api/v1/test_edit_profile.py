@@ -1,10 +1,10 @@
 """
 Unit tests for ``PUT /v1/profile/{profile_id}``.
 """
-from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
 from httpx import Response
 
+from models.base import model_encoder
 from models.profile import Profile
 from services.profile import EditProfileRequest
 
@@ -26,7 +26,7 @@ def test_happy_path(client: TestClient, profiles: list[Profile]):
 
     response: Response = client.put(
         f"/v1/profile/{target_profile.id}",
-        json=jsonable_encoder(request_body),
+        json=model_encoder(request_body),
     )
 
     assert response.status_code == 200
@@ -38,6 +38,7 @@ def test_happy_path(client: TestClient, profiles: list[Profile]):
         "full_name": "Ethel Chen",
         "street_address": "3775 Deerswim Lane",
         "email": "ethel.chen@example.com",
+        "awards": [],
     }
 
 
@@ -54,7 +55,5 @@ def test_non_existent_profile(client: TestClient):
         email="ethel.chen@example.com",
     )
 
-    response: Response = client.put(
-        "/v1/profile/999", json=jsonable_encoder(request_body)
-    )
+    response: Response = client.put("/v1/profile/999", json=model_encoder(request_body))
     assert response.status_code == 404

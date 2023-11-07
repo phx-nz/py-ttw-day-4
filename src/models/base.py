@@ -1,4 +1,4 @@
-__all__ = ["Base"]
+__all__ = ["Base", "model_encoder"]
 
 from typing import Any
 

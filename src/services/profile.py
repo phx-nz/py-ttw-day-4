@@ -1,4 +1,4 @@
-__all__ = ["ProfileService"]
+__all__ = ["EditAwardRequest", "EditProfileRequest", "ProfileService"]
 
 from typing import Iterable, Sequence
 
@@ -6,13 +6,22 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from models import Award
 from models.profile import Profile
 from models.service import BaseOrmService
 
 
+class EditAwardRequest(BaseModel):
+    """
+    DTO for editing/creating an Award.
+    """
+
+    title: str
+
+
 class EditProfileRequest(BaseModel):
     """
-    DTO for passing updated profile to :py:func:`ProfileService.edit_profile_by_id`.
+    DTO for editing/creating a Profile.
     """
 
     username: str
@@ -65,9 +74,7 @@ class ProfileService(BaseOrmService):
         Modifies the profile with the specified ID, replacing its attributes from
         ``data``.
 
-        .. important:
-
-           Make sure to call ``session.commit()`` to commit the transaction!
+        .. important:: Remember to call ``session.commit()`` to commit the transaction.
 
         :returns: the model instance on success, or ``None`` if no such record exists.
         """
@@ -86,10 +93,27 @@ class ProfileService(BaseOrmService):
         """
         Adds a new profile to the database and returns it.
 
-        .. important:
-
-           Make sure to call ``session.commit()`` to commit the transaction!
+        .. important:: Remember to call ``session.commit()`` to commit the transaction.
         """
         profile = Profile(**dict(data))
         session.add(profile)
+        return profile
+
+    @staticmethod
+    async def bestow_award(
+        session: AsyncSession, profile_id: int, data: EditProfileRequest
+    ) -> Profile | None:
+        """
+        Bestows an award upon a profile.
+
+        .. important:: Remember to call ``session.commit()`` to commit the transaction.
+
+        :returns: the updated profile, or ``None`` if no such profile exists.
+        """
+        profile = await ProfileService.get_by_id(session, profile_id)
+
+        if not profile:
+            return None
+
+        session.add(Award(**dict(data), profile=profile, profile_id=profile.id))
         return profile

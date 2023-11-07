@@ -5,7 +5,7 @@ import pytest
 
 from models.profile import Profile
 from services import get_service
-from services.profile import EditProfileRequest, ProfileService
+from services.profile import EditAwardRequest, EditProfileRequest, ProfileService
 
 
 @pytest.fixture(name="service")
@@ -164,3 +164,35 @@ async def test_create_profile_happy_path(
     # The new profile was added to the database.
     async with service.session() as session:
         assert await service.get_by_id(session, actual.id) == actual
+
+
+async def test_bestow_award_happy_path(
+    profiles: list[Profile], service: ProfileService
+):
+    """
+    Successfully bestowing an award upon a profile.
+    """
+    target_profile: Profile = profiles[0]
+
+    data = EditAwardRequest(title="SQLAlchemist")
+
+    async with service.session() as session:
+        actual_profile: Profile = await service.bestow_award(
+            session, target_profile.id, data
+        )
+
+        assert isinstance(actual_profile, Profile)
+        assert len(actual_profile.awards) == 1
+        assert actual_profile.awards[0].title == data.title
+
+
+async def test_bestow_award_non_existent_profile(service: ProfileService):
+    """
+    Attempting to bestow an award upon a non-existent profile.
+    """
+    data = EditAwardRequest(title="SQLAlchemist")
+
+    async with service.session() as session:
+        profile = await service.bestow_award(session, 999, data)
+
+        assert profile is None

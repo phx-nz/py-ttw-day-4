@@ -1,10 +1,10 @@
 """
 Integration tests for ``POST /v1/profile``
 """
-from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
 from httpx import Response
 
+from models.base import model_encoder
 from models.profile import Profile
 from services.profile import EditProfileRequest
 
@@ -30,9 +30,10 @@ def test_happy_path(client: TestClient, profiles: list[Profile]):
         "full_name": "Ethel Chen",
         "street_address": "3775 Deerswim Lane",
         "email": "ethel.chen@example.com",
+        "awards": [],
     }
 
-    response: Response = client.post("/v1/profile", json=jsonable_encoder(request_body))
+    response: Response = client.post("/v1/profile", json=model_encoder(request_body))
     assert response.status_code == 200
 
     # The response contains the new profile details.

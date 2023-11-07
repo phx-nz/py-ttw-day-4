@@ -1,11 +1,11 @@
 """
 Integration tests for ``GET /v1/profile/{profile_id}``
 """
-from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
 from httpx import Response
 
 from models import Profile
+from models.base import model_encoder
 
 
 def test_happy_path(client: TestClient, profiles: list[Profile]):
@@ -16,7 +16,7 @@ def test_happy_path(client: TestClient, profiles: list[Profile]):
 
     response: Response = client.get(f"/v1/profile/{target_profile.id}")
     assert response.status_code == 200
-    assert response.json() == jsonable_encoder(target_profile)
+    assert response.json() == model_encoder(target_profile)
 
 
 def test_non_existent_profile(client: TestClient):
