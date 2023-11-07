@@ -97,7 +97,7 @@ class AppConfig(BaseConfig, BaseSettings):
         """
         :returns: whether we are operating in a test environment.
         """
-        return self.ev == Env.test
+        return self.env == Env.test
 
 
 class TestConfig(BaseSettings):
