@@ -105,10 +105,11 @@ def test_generate_profiles_happy_path(
     ) in result.stdout
 
     # ``pytest-asyncio`` runs an event loop for async test functions, which causes an
-    # error when trying to run the async command (can't have multiple running event
-    # loops).  As a workaround we have to use ``embed_event_loop`` here, so that we
-    # can keep the test function synchronous and prevent ``pytest-asyncio`` from running
-    # its own event loop during the test :shrug:
+    # error when trying to run the async ``generate_profiles()`` command (can't have
+    # multiple running event loops).  As a workaround we have to use the
+    # ``embed_event_loop`` decorator here, so that we can keep the test function
+    # synchronous and prevent ``pytest-asyncio`` from running its own event loop during
+    # the test :shrug:
     @embed_event_loop
     async def verify():
         # Lastly, verify that the profiles were saved correctly to the database.

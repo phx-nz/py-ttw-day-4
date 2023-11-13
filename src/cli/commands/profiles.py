@@ -25,10 +25,10 @@ async def get_profile(profile_id: int):
     async with profile_service.session() as session:
         profile = await profile_service.get_by_id(session, profile_id)
 
-    if not profile:
-        raise ValueError(f"No profile exists with ID {profile_id}")
+        if not profile:
+            raise ValueError(f"No profile exists with ID {profile_id}")
 
-    output_profile(profile)
+        output_profile(profile)
 
 
 @app.command("update")
@@ -77,7 +77,7 @@ async def create_profile(data_filepath: str):
         profile = await profile_service.create(session, data)
         await session.commit()
 
-    output_profile(profile)
+        output_profile(profile)
 
 
 def output_profile(profile: Profile) -> None:
