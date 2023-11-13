@@ -4,7 +4,6 @@ Defines CLI command for generating profiles.
 __all__ = ["app"]
 
 import typing
-from pathlib import Path
 
 import typer
 from httpx import AsyncClient
@@ -22,7 +21,6 @@ app = typer.Typer(name="generate")
 # A few constants that will be used by :py:func:`generate_profiles` below.
 API_URL_TEMPLATE = "https://randomuser.me/api/?nat=NZ&results={count}"
 DEFAULT_COUNT = 5
-TARGET_PATH = Path(__file__).parent.parent.parent / "data" / "profiles.json"
 
 
 # This command can be invoked by running ``pipenv run app-cli generate profiles``.
@@ -55,20 +53,17 @@ async def generate_profiles(
     raw_profiles = response["results"]
 
     rich_print("[green]Transforming profiles...[/green]")
-    profiles = [
-        extract_profile(raw_profile_data)
-        for profile_id, raw_profile_data in enumerate(raw_profiles, start=1)
-    ]
+    profiles = [extract_profile(raw_profile_data) for raw_profile_data in raw_profiles]
 
-    rich_print(f"[green]Saving profiles to {TARGET_PATH}...[/green]")
+    rich_print("[green]Saving profiles to database...[/green]")
     profile_service: ProfileService = get_service(ProfileService)
 
     async with profile_service.session(expire_on_commit=False) as session:
         profile_service.save_profiles(session, profiles)
         await session.commit()
 
-    for profile in profiles:
-        rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
+        for profile in profiles:
+            rich_print(f"[green]Welcome [cyan]{profile.full_name}[/cyan]![/green]")
 
     rich_print("[green]Done![/green]")
 

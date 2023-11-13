@@ -23,9 +23,8 @@ async def fixture_db(monkeypatch) -> None:
     """
     Sets up the database for unit tests, ensuring all the migrations get run.
 
-    Note that this fixture has ``scope="session"``, so that it only gets loaded once
-    during the entire test run.  It also has ``autouse=True``, so that it is loaded
-    automatically, even if no test explicitly uses it.
+    Note that this fixture has ``autouse=True``, so that it is loaded automatically,
+    even if for tests that don't explicitly use it.
 
     .. important::
 
@@ -39,16 +38,16 @@ async def fixture_db(monkeypatch) -> None:
     monkeypatch.setattr(base, "registry", ClassRegistryInstanceCache(base._registry))
 
     # Get ready to run migrations.
-    service: MigrationService = get_service(MigrationService)
+    migration_service: MigrationService = get_service(MigrationService)
 
     # Double-check we're pointed at the right DB configuration before doing
     # anything.
-    assert service.db.config.env == Env.test
+    assert migration_service.db.config.env == Env.test
 
     # Finally, we can run migrations (:
     # Note that we have to call it "synchronously", as pytest-asyncio doesn't work with
     # session-scoped async fixtures :shrug:
-    await service.create_tables_from_models()
+    await migration_service.create_tables_from_models()
     yield
 
 

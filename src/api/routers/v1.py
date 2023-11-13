@@ -36,10 +36,10 @@ async def get_profile(profile_id: int) -> dict:
     async with profile_service.session() as session:
         profile: Profile | None = await profile_service.get_by_id(session, profile_id)
 
-    if not profile:
-        raise HTTPException(status_code=404, detail="Profile not found")
+        if not profile:
+            raise HTTPException(status_code=404, detail="Profile not found")
 
-    return model_encoder(profile)
+        return model_encoder(profile)
 
 
 @router.put("/profile/{profile_id}")
@@ -58,10 +58,10 @@ async def edit_profile(profile_id: int, body: EditProfileRequest) -> dict:
         )
         await session.commit()
 
-    if not profile:
-        raise HTTPException(status_code=404, detail="Profile not found")
+        if not profile:
+            raise HTTPException(status_code=404, detail="Profile not found")
 
-    return model_encoder(profile)
+        return model_encoder(profile)
 
 
 @router.post("/profile")
@@ -76,7 +76,7 @@ async def create_profile(body: EditProfileRequest) -> dict:
         profile: Profile | None = await profile_service.create(session, body)
         await session.commit()
 
-    return model_encoder(profile)
+        return model_encoder(profile)
 
 
 @router.post("/profile/{profile_id}/award")
@@ -92,7 +92,7 @@ async def bestow_award(profile_id: int, body: EditAwardRequest) -> dict:
         )
         await session.commit()
 
-    if not profile:
-        raise HTTPException(status_code=404, detail="Profile not found")
+        if not profile:
+            raise HTTPException(status_code=404, detail="Profile not found")
 
-    return model_encoder(profile)
+        return model_encoder(profile)

@@ -101,7 +101,7 @@ class ProfileService(BaseOrmService):
 
     @staticmethod
     async def bestow_award(
-        session: AsyncSession, profile_id: int, data: EditProfileRequest
+        session: AsyncSession, profile_id: int, data: EditAwardRequest
     ) -> Profile | None:
         """
         Bestows an award upon a profile.
