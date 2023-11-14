@@ -1,6 +1,6 @@
 __all__ = ["Base", "model_encoder"]
 
-from typing import Any, Iterable
+from typing import Any, Sequence
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import inspect
@@ -49,7 +49,7 @@ def model_encoder(model: Any, **kwargs) -> dict:
                 if relationship.direction == ONETOMANY
             }
         )
-    elif isinstance(model, Iterable):
+    elif isinstance(model, Sequence):
         cleaned = [model_encoder(value) for value in model]
     else:
         cleaned = model
