@@ -25,3 +25,10 @@ pre-commit = [
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+filterwarnings = [
+    # Alembic imports dateutil which has reference to deprecated method, which generates
+    # a warning...which pytest dutifully warns us about.
+    # Since we can't do anything about that in our code, configure pytest to ignore it.
+    # :see: https://docs.pytest.org/en/stable/how-to/capture-warnings.html#controlling-warnings
+    'ignore:datetime.datetime.utcfromtimestamp\(\) is deprecated:DeprecationWarning'
+]
