@@ -38,6 +38,7 @@ def test_happy_path(client: TestClient, profiles: list[Profile]):
         "full_name": "Ethel Chen",
         "street_address": "3775 Deerswim Lane",
         "email": "ethel.chen@example.com",
+        "external_id": None,
         "awards": [],
     }
 

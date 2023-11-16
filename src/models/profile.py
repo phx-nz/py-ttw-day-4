@@ -17,13 +17,13 @@ class Profile(Base):
     __tablename__ = "profiles"
 
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
-    external_id: Mapped[str | None] = mapped_column(unique=True)
     username: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
     gender: Mapped[str]
     full_name: Mapped[str]
     street_address: Mapped[str]
     email: Mapped[str]
+    external_id: Mapped[str | None] = mapped_column(default=None, unique=True)
 
     awards: Mapped[list[Award]] = relationship(
         back_populates="profile",
