@@ -67,6 +67,18 @@ class ProfileService(BaseOrmService):
         return await session.get(Profile, id)
 
     @staticmethod
+    async def get_by_external_id(
+        session: AsyncSession, external_id: str
+    ) -> Profile | None:
+        """
+        :returns: the profile with the specified external ID, or ``None`` if no such
+        record exists.
+        """
+        return await session.scalar(
+            select(Profile).where(Profile.external_id == external_id).limit(1)
+        )
+
+    @staticmethod
     async def edit_by_id(
         session: AsyncSession, id: int, data: EditProfileRequest
     ) -> Profile | None:

@@ -17,6 +17,7 @@ class Profile(Base):
     __tablename__ = "profiles"
 
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
+    external_id: Mapped[str | None] = mapped_column(unique=True)
     username: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
     gender: Mapped[str]

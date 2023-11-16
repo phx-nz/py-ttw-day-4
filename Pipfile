@@ -5,12 +5,14 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+httpx = "*"
 orjson = "*"
 phx-class-registry = "*"
-psycopg = {extras = ["pool", "binary"], version = "*"}
+psycopg = { extras = ["pool", "binary"], version = "*" }
 pydantic = "*"
 pydantic-settings = "*"
-sqlalchemy = {extras = ["asyncio"], version = "*"}
+pyjwt = { extras = ["crypto"], version = "*" }
+sqlalchemy = { extras = ["asyncio"], version = "*" }
 uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
 
@@ -23,7 +25,6 @@ autohooks-plugin-black = "*"
 autohooks-plugin-pytest = "*"
 autohooks-plugin-ruff = "*"
 black = "*"
-httpx = "*"
 ipython = "*"
 pipenv = "*"
 pytest = "*"

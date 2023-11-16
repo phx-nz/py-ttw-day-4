@@ -8,8 +8,8 @@ from sqlalchemy import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from models.base import Base
-from services import DatabaseService
 from services.base import BaseService
+from services.database import DatabaseService
 
 
 class MigrationService(BaseService):

@@ -35,6 +35,10 @@ class BaseConfig(BaseModel):
     """
     Provides runtime configuration values (e.g., environment vars) for the application.
     """
+    auth0_domain: str
+    auth0_audience: str
+    auth0_issuer: str
+    auth0_algorithms: str
 
     db_host: str
     db_port: int
@@ -56,7 +60,6 @@ class BaseConfig(BaseModel):
             if self.db_protocol.startswith("sqlite")
             else f"{self.db_protocol}://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_database}"
         )
-
 
 class AppConfig(BaseConfig, BaseSettings):
     """
@@ -116,6 +119,9 @@ class TestConfig(BaseSettings):
 
 
 class ConfigService(BaseService):
+    """
+    Provides access to app configuration as a service.
+    """
     provides = "config"
 
     @classmethod

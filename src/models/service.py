@@ -5,8 +5,8 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from services import DatabaseService
 from services.base import BaseService
+from services.database import DatabaseService
 
 
 class BaseOrmService(BaseService, metaclass=ABCMeta):
