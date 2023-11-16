@@ -2,7 +2,7 @@ __all__ = ["ConfigService", "Env"]
 
 from enum import StrEnum, auto
 from os import getenv
-from typing import Any, ClassVar, Self
+from typing import Any, ClassVar, Self, TYPE_CHECKING
 
 from pydantic import BaseModel
 from pydantic_settings import (
@@ -115,21 +115,32 @@ class TestConfig(BaseSettings):
     is_test: ClassVar[bool] = True
 
 
-class ConfigService(BaseService):
-    provides = "config"
+if TYPE_CHECKING:
+    # Teach IDE how to interpret :py:meth:`ConfigService.__getattr__`.
+    class ConfigService(BaseConfig):
+        pass
 
-    @classmethod
-    def factory(cls) -> Self:
-        return ConfigService(
-            TestConfig() if get_env_name() == Env.test else AppConfig()
-        )
+else:
 
-    def __init__(self, config: BaseConfig):
-        super().__init__()
-        self.config = config
-
-    def __getattr__(self, item: str) -> Any:
+    class ConfigService(BaseService):
         """
-        Returns the config value for the specified key.
+        Provides application configuration as a service.
         """
-        return getattr(self.config, item)
+
+        provides = "config"
+
+        @classmethod
+        def factory(cls) -> Self:
+            return ConfigService(
+                TestConfig() if get_env_name() == Env.test else AppConfig()
+            )
+
+        def __init__(self, config: BaseConfig):
+            super().__init__()
+            self.config = config
+
+        def __getattr__(self, item: str) -> Any:
+            """
+            Returns the config value for the specified key.
+            """
+            return getattr(self.config, item)
