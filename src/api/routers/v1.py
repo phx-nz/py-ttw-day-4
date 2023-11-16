@@ -11,8 +11,6 @@ from api.auth import requires_auth
 from models.base import model_encoder
 from models.profile import Profile
 from services import get_service
-from services.auth import AuthService
-from services.auth.types import Auth0AccessToken, BaseIDToken
 from services.profile import EditAwardRequest, EditProfileRequest, ProfileService
 
 # All API routes defined in this module will have a path prefix of ``/v1``.
@@ -30,35 +28,13 @@ def index() -> dict:
 
 
 @router.get("/profile")
-async def get_profile(
-    token: Annotated[Auth0AccessToken, Security(requires_auth(), scopes=["profile"])]
+async def get_own_profile(
+    profile: Annotated[Profile, Security(requires_auth(), scopes=["profile"])]
 ) -> dict:
     """
     Retrieves the profile for the logged-in user.
     """
-    profile_service: ProfileService = get_service(ProfileService)
-
-    async with profile_service.session() as session:
-        profile = await profile_service.get_by_external_id(session, token.sub)
-
-        if not profile:
-            auth_service: AuthService = get_service(AuthService)
-            id_token: BaseIDToken = await auth_service.fetch_id_token(token)
-
-            profile = Profile(
-                external_id=id_token.get_external_id(),
-                username=id_token.get_email(),
-                password="",
-                gender="",
-                full_name=id_token.get_name(),
-                street_address="",
-                email=id_token.get_email(),
-            )
-
-            session.add(profile)
-            await session.commit()
-
-        return model_encoder(profile)
+    return model_encoder(profile)
 
 
 @router.get("/profile/{profile_id}")
