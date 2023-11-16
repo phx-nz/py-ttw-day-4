@@ -94,6 +94,11 @@ Integration test
 You probably don't need to make any changes to your integration test.  Testing
 interfaces over implementation details FTW 😎
 
+Unit tests
+~~~~~~~~~~
+If you've added a method to ``ProfileService`` to fetch a profile by ID, then you might
+also have unit tests for this method...which you probably don't need to change either 😎
+
 API endpoint
 ~~~~~~~~~~~~
 * The app uses
@@ -129,6 +134,9 @@ API endpoint
   instead of the JSON file.  You can use ``session.get()`` or ``session.scalar()`` for
   this.
 
+* Remember that all code that uses database objects must be inside of a database session
+  context (``async with profile_service.session() as session``).
+
 .. tip::
 
    The end result should look something like this:
@@ -142,12 +150,14 @@ API endpoint
       @router.get("/profile/{profile_id}")
       async def get_profile(profile_id: int) -> dict:
           async with profile_service.session() as session:
-          profile: Profile | None = await profile_service.get_by_id(session, profile_id)
+              profile: Profile | None = await profile_service.get_by_id(
+                  session, profile_id
+              )
 
-          if not profile:
-              raise HTTPException(status_code=404, detail="Profile not found")
+              if not profile:
+                  raise HTTPException(status_code=404, detail="Profile not found")
 
-          return model_encoder(profile)
+              return model_encoder(profile)
 
       # src/services/profile.py
       class ProfileService(BaseOrmService):
@@ -157,20 +167,99 @@ API endpoint
 
               # Or:
               return await session.scalar(
-                  select(Profile).where(Profile.id == id).first()
+                  select(Profile).where(Profile.id == id).limit(1)
               )
 
 
 Step 2: Get profile by ID (CLI interface)
 -----------------------------------------
+Next up is the CLI interface for getting a profile by ID.
+
+Integration test
+~~~~~~~~~~~~~~~~
+You probably won't need to make any changes to your CLI integration test, either 😎
+
+CLI command
+~~~~~~~~~~~
+Once you've gotten your API endpoint function working with the database, it should be
+straightforward to do the same for your CLI command function.
+
+Tips:
+
+* To work with the database, you'll need to make your CLI command function asynchronous,
+  but there's a bit of a snag because Typer doesn't support asynchronous commands.  So,
+  you'll need to add the ``@embed_event_loop`` decorator, like this:
+
+  .. code-block:: py
+
+     @app.command("get")
+     @embed_event_loop
+     async def get_profile(profile_id: int):
+
+  .. important:: Make sure ``@embed_event_loop`` is **after** ``@app.command()``.
 
 Step 3: Update profile by ID (HTTP interface)
 ---------------------------------------------
+Next up is updating a profile by its ID.  As before, we'll start with the API endpoint
+function.
+
+Tips:
+
+* If your integration test also checks that the profile was modified in the database,
+  you may need to update your test.
+
+* Similarly, you may need to update unit tests if you've added a method to
+  ``ProfileService`` to update profiles.
+
+* To update the profile, you can either modify the ``Profile`` object attributes, or you
+  can use the ``sqlalchemy.update()`` function.
+
+  .. important:: Don't forget to call ``session.commit()`` (or use ``session.begin()``
+     to create an auto-committing transaction).
 
 Step 4: Update profile by ID (CLI interface)
 --------------------------------------------
+Lastly, modify your CLI command function to work with the database.
+
+Tips:
+
+* Modifying the integration test will be a little tricky.  You won't be able to make
+  your test function asynchronous because that will cause an error when you try to
+  invoke your CLI command inside the test (``@embed_event_loop`` will try to spin up an
+  event loop, and Python won't let you run multiple event loops concurrently).
+
+  Instead, you'll need to wrap the asynchronous parts of your integration test inside a
+  function that is also decorated with ``@embed_event_loop``).  It will look something
+  like this:
+
+  .. code-block:: py
+
+     def test_update_profile_happy_path(
+         data_filepath: str,
+         profiles: list[Profile],
+         runner: TestCliRunner,
+     ):
+         target_profile: Profile = profiles[0]
+
+         result: Result = runner.invoke(
+             ["profiles", "update", str(target_profile.id), data_filepath]
+         )
+
+         @embed_event_loop
+         async def verify():
+             profile_service: ProfileService = get_service(ProfileService)
+             async with profile_service.session() as session:
+                 ...
+
+         verify()
 
 Step 5: Stretch goals
 ---------------------
 This step is optional.  If you're feeling confident and want to tackle some extra
 challenges, give these a try 😺
+
+* If you've also added an API endpoint and CLI command to create a profile from
+  yesterday's stretch goals, update those functions to add new profiles to the database\
+  instead of the JSON file (and if you haven't added these yet, try writing them 😁).
+
+* Add a one-to-many relation to ``Profile``.
