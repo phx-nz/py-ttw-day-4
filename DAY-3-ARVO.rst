@@ -129,6 +129,7 @@ API endpoint
   .. code-block:: py
 
      async with profile_service.session() as session:
+         ...
 
 * Modify the code to get the profile so that it fetches the profile from the database
   instead of the JSON file.  You can use ``session.get()`` or ``session.scalar()`` for
@@ -262,4 +263,82 @@ challenges, give these a try 😺
   yesterday's stretch goals, update those functions to add new profiles to the database\
   instead of the JSON file (and if you haven't added these yet, try writing them 😁).
 
-* Add a one-to-many relation to ``Profile``.
+* Users want to be able to bestow awards on other their friends' profiles.  Add a new
+  model ``Award`` with a relation to ``Profile``:
+
+  #. Create a new standalone model ``Award``.  Don't worry about relating it to
+     ``Profile`` yet.
+
+  #. Look at `alembic/README.rst <./alembic/README.rst>`_ for instructions to create a
+     new migration.
+
+  #. Create and run a new migration, and verify that the ``awards`` table was created in
+     your database.
+
+  #. Next add the relation to ``Profile`` and ``Award``.  Refer to
+     `SQLAlchemy ORM relationship patterns <https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#one-to-many>`_
+     for some ideas.
+
+     .. tip::
+
+        The end result should look something like this:
+
+        .. code-block:: py
+
+           # src/models/profile.py
+           from sqlalchemy.orm import Mapped, mapped_column, relationship
+           from models.award import Award
+           from models.base import Base
+
+           class Profile(Base):
+               ...
+               awards: Mapped[list[Award]] = relationship(
+                   back_populates="profile",
+                   default_factory=list,
+                   lazy="joined",
+               )
+
+           # src/models/award.py
+           from sqlalchemy import ForeignKey
+           from sqlalchemy.orm import Mapped, mapped_column, relationship
+           from typing import TYPE_CHECKING
+           from models.base import Base
+
+           # Make ``Profile`` a forward ref, to avoid circular imports.
+           # :see: https://stackoverflow.com/a/39757388/5568265
+           if TYPE_CHECKING:
+               from models import Profile
+
+           class Award(Base):
+               ...
+               profile: Mapped["Profile"] = relationship(
+                   back_populates="awards",
+                   lazy="joined",
+               )
+               profile_id: Mapped[int] = mapped_column(ForeignKey("profiles.id"))
+
+  #. Create and run another alembic migration to add the new columns and the foreign
+     key.
+
+  #. This will likely make some unit and integration tests fail, as they will not be
+     expecting ``awards`` to appear in API responses and CLI output.  You'll need to fix
+     the tests and get back to a green bar again.
+
+     .. note::
+
+        If you get ``RecursionError: maximum recursion depth exceeded``, this is a known
+        issue with ``jsonable_encoder()`` (see
+        `GitHub discussion <https://github.com/tiangolo/fastapi/discussions/9026>`_).
+
+        To work around the issue, use ``models.base.model_encoder`` instead of
+        ``jsonable_encoder``.  This function strips out recursive many-to-one relations
+        before passing the ORM object to ``jsonable_encoder``.
+
+        Note that ``model_encoder`` doesn't handle one-to-one and many-to-many
+        relationships...yet 🤔
+
+  #. Add unit tests and a ``ProfileService`` method to add an award to a profile.
+
+  #. Add integration tests and an API method to add an award to a profile.
+
+  #. Lastly, add integration tests and a CLI command to add an award to a profile.
