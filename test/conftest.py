@@ -84,7 +84,7 @@ async def fixture_profiles(monkeypatch) -> list[Profile]:
     ]
 
     service: ProfileService = get_service(ProfileService)
-    async with service.session(expire_on_commit=False) as session:
+    async with service.session() as session:
         session.add_all(profiles)
         await session.commit()
 
