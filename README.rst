@@ -4,7 +4,7 @@
 Workshop Day 2: FastAPI
 =======================
 The goal of today's workshop is to build a (simple) API for managing user profiles using
-`FastAPI`_.
+`FastAPI <https://fastapi.tiangolo.com/>`_.
 
 Follow the below instructions to install the project, run the server, and check the
 code quality.  Then check `Exercise Instructions <#exercise-instructions>`_ to find out
@@ -56,8 +56,8 @@ Run tests with the following command::
 Generating user profiles
 ------------------------
 The project comes pre-loaded with set of randomised profiles, generated using the
-`Random User Generator API`_.  If desired you can generate new profiles by running the
-following command::
+`Random User Generator API <https://randomuser.me/documentation>`_.  If desired you can
+generate new profiles by running the following command::
 
    pipenv run app-cli generate profiles
 
@@ -73,7 +73,9 @@ Documentation
 FastAPI automatically generates OpenAPI documentation for you.  Once you've started the
 server, go to `http://localhost:8000/docs <http://localhost:8000/docs>`_ to see it.
 
-Refer to `FastAPI documentation`_ for more information.
+Refer to
+`FastAPI documentation <https://fastapi.tiangolo.com/tutorial/first-steps/#interactive-api-docs>`_
+for more information.
 
 Exercise Instructions
 =====================
@@ -297,11 +299,5 @@ challenges, give it a try 😺
 
   Don't forget to write unit tests!  You can find some examples in
   `test/unit/services/test_profile.py <test/unit/services/test_profile.py>`_.
-- The built-in ``json`` library is a bit on the slow side.  Try using `orjson`_ instead.
-
-
-.. _FastAPI: https://fastapi.tiangolo.com/
-.. _FastAPI documentation: https://fastapi.tiangolo.com/tutorial/first-steps/#interactive-api-docs
-.. _orjson: https://pypi.org/project/orjson/
-.. _Random User Generator API: https://randomuser.me/documentation
-.. _uvicorn: https://www.uvicorn.org/
+- The built-in ``json`` library is a bit on the slow side.  Try using
+  `orjson <https://pypi.org/project/orjson/>`_ instead.
