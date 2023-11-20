@@ -29,5 +29,5 @@ python_version = "3.12"
 
 [scripts]
 app-cli = "python -m cli.main"
-dev-server = "uvicorn api.main:app --host 0.0.0.0 --reload"
-server = "uvicorn api.main:app --host 0.0.0.0"
+dev-server = "uvicorn api.main:app --reload"
+server = "uvicorn api.main:app"
