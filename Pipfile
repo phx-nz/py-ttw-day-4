@@ -37,8 +37,8 @@ python_version = "3.12"
 
 [scripts]
 app-cli = "python -m cli.main"
-dev-server = "uvicorn api.main:app --host 0.0.0.0 --reload"
+dev-server = "uvicorn api.main:app --reload"
 docker-reset-db = "docker volume rm docker_db-data"
 docker-start = "docker compose -f ./docker/docker-compose.yml up --build --detach"
 docker-stop = "docker compose -f ./docker/docker-compose.yml down"
-server = "uvicorn api.main:app --host 0.0.0.0"
+server = "uvicorn api.main:app"
