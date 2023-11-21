@@ -313,11 +313,10 @@ This step is optional.  If you're feeling confident and want to tackle some extr
 challenges, give it a try 😺
 
 - Try adding an API endpoint to create a new profile (e.g., ``POST /v1/profile``).
-- We probably have too much logic in our controllers.  Try refactoring out the
-  functionality to get and edit profiles into
-  `src/services/profile.py <./src/services/profile.py>`_.
-
-  Don't forget to write unit tests!  You can find some examples in
-  `test/unit/services/test_profile.py <test/unit/services/test_profile.py>`_.
+- Right now it's possible to update a profile to have an empty username, password, etc.
+  Try using
+  `Pydantic fields <https://docs.pydantic.dev/latest/concepts/fields/#string-constraints>`_
+  to add some constraints to the request body for creating and editing profiles, so that
+  those endpoints return a 400 response if the request body contains empty values.
 - The built-in ``json`` library is a bit on the slow side.  Try using
   `orjson <https://pypi.org/project/orjson/>`_ instead.
