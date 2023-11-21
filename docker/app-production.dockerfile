@@ -47,4 +47,7 @@ EXPOSE 8000
 
 # This is the command that will run the server (uvicorn) process when the container
 # starts.
-CMD ["pipenv", "run", "server"]
+# Note that we also specify `--host 0.0.0.0` so that the process can listen for external
+# traffic (you'll connect to the container via localhost, but from the container's point
+# of view, your request is coming from an external system).
+CMD ["pipenv", "run", "server", "--host", "0.0.0.0"]
