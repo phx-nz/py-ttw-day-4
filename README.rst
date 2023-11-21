@@ -149,14 +149,7 @@ profile ID 3.
    in the database.  Your API endpoint will need to call this function and then find the
    profile with the matching ID in the list.
 
-   Once your endpoint has found the correct profile, it should ``return`` the profile
-   data, and unfortunately this is a bit tricky.  By default FastAPI sends responses in
-   JSON format, and the ``Profile`` objects returned by
-   ``ProfileService.load_profiles()`` aren't compatible with JSON.
-
-   Fortunately, FastAPI has a solution for this:
-   `jsonable_encoder() <https://fastapi.tiangolo.com/tutorial/encoder/>`_ converts the
-   input value into a JSON-compatible type.
+   Once your endpoint has found the correct profile, it should ``return`` the profile.
 
    .. tip::
 
@@ -164,11 +157,11 @@ profile ID 3.
 
       .. code-block:: py
 
-         from fastapi.encoders import jsonable_encoder
+         from models.profile import Profile
          from services.profile import ProfileService.load_profiles
 
          @router.get("/profile/{profile_id}")
-         def get_profile(profile_id: int) -> dict:
+         def get_profile(profile_id: int) -> Profile:
              """
              Retrieves the profile with the specified ID.
              """
@@ -178,7 +171,7 @@ profile ID 3.
                  p for p in ProfileService.load_profiles() if p.id == profile_id
              )
 
-             return jsonable_encoder(profile)
+             return profile
 
 #. The final step is to modify your integration test so that it checks for actual
    profile data in the response.
@@ -216,8 +209,17 @@ profile ID 3.
    objects in ``profiles`` because it won't have the same type (``response.json()``
    returns a ``dict``, not a ``Profile``).
 
-   Instead, you'll need to pass the ``Profile`` through
-   ``fastapi.encoders.jsonable_encoder``, just like you did in your API endpoint.
+   Fortunately, FastAPI has a solution for this:
+   `jsonable_encoder() <https://fastapi.tiangolo.com/tutorial/encoder/>`_ converts the
+   input value into a JSON-compatible type:
+
+   .. code-block:: py
+
+      from fastapi.encoders import jsonable_encoder
+
+      response = client.get(...)
+      assert response.status_code == 200
+      assert response.json() == jsonable_encoder(profile)
 
    .. tip::
 
