@@ -145,11 +145,12 @@ API endpoint
    .. code-block:: py
 
       # src/api/routers/v1.py
+      from models.profile import Profile
       from services import get_service
       from services.profile import ProfileService
 
       @router.get("/profile/{profile_id}")
-      async def get_profile(profile_id: int) -> dict:
+      async def get_profile(profile_id: int) -> Profile:
           profile_service: ProfileService = get_service(ProfileService)
           async with profile_service.session() as session:
               profile: Profile | None = await profile_service.get_by_id(
@@ -159,7 +160,7 @@ API endpoint
               if not profile:
                   raise HTTPException(status_code=404, detail="Profile not found")
 
-              return model_encoder(profile)
+              return profile
 
       # src/services/profile.py
       class ProfileService(BaseOrmService):
