@@ -150,6 +150,7 @@ API endpoint
 
       @router.get("/profile/{profile_id}")
       async def get_profile(profile_id: int) -> dict:
+          profile_service: ProfileService = get_service(ProfileService)
           async with profile_service.session() as session:
               profile: Profile | None = await profile_service.get_by_id(
                   session, profile_id
