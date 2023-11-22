@@ -36,7 +36,7 @@ class InvalidCredentials(ValueError):
 
 class BearerAuth(Auth):
     """
-    Provides simple bearer auth for HTTPX.
+    Provides simple interface for adding bearer auth to HTTPX requests.
     """
 
     def __init__(self, token: str):
